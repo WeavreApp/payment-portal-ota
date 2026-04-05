@@ -1,0 +1,10 @@
+{
+  "/admin/page": "app/admin/page.js",
+  "/page": "app/page.js",
+  "/pay/page": "app/pay/page.js",
+  "/admin/(dashboard)/payments/page": "app/admin/(dashboard)/payments/page.js",
+  "/admin/(dashboard)/dashboard/page": "app/admin/(dashboard)/dashboard/page.js",
+  "/admin/(dashboard)/staff/page": "app/admin/(dashboard)/staff/page.js",
+  "/admin/(dashboard)/review/page": "app/admin/(dashboard)/review/page.js",
+  "/admin/(dashboard)/students/page": "app/admin/(dashboard)/students/page.js"
+}

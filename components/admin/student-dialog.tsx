@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Loader as Loader2 } from 'lucide-react';
-import { CLASS_LIST, type Student } from '@/lib/constants';
+import { CLASS_LIST, type Student, calculateStudentFees, getFeeForClass, allowsBoarding } from '@/lib/constants';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 
@@ -36,6 +36,88 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
   const [totalFees, setTotalFees] = useState('');
   const [hostelFee, setHostelFee] = useState('');
   const [saving, setSaving] = useState(false);
+  const [autoCalculatedFees, setAutoCalculatedFees] = useState<{ tuition: number; hostel: number; total: number } | null>(null);
+  const [classFeeRates, setClassFeeRates] = useState<any[]>([]);
+  const [globalHostelFee, setGlobalHostelFee] = useState(250000);
+
+  // Load current fee rates from database
+  useEffect(() => {
+    async function loadFeeRates() {
+      try {
+        // Load class fee rates
+        const { data: classData, error: classError } = await supabase
+          .from('class_fee_rates')
+          .select('*')
+          .order('class_name');
+
+        if (classError) throw classError;
+        setClassFeeRates(classData || []);
+
+        // Load global hostel fee
+        const { data: hostelData, error: hostelError } = await supabase
+          .from('fee_settings')
+          .select('setting_value')
+          .eq('setting_key', 'global_hostel_fee')
+          .single();
+
+        if (hostelError && hostelError.code !== 'PGRST116') throw hostelError;
+        
+        if (hostelData) {
+          setGlobalHostelFee(parseFloat(hostelData.setting_value));
+        }
+      } catch (error) {
+        console.error('Error loading fee rates:', error);
+      }
+    }
+
+    if (open) {
+      loadFeeRates();
+    }
+  }, [open]);
+
+  // Auto-calculate fees when class or student type changes
+  useEffect(() => {
+    if (studentClass && studentType && classFeeRates.length > 0) {
+      try {
+        // Find the fee rate for this specific class from database
+        const classRate = classFeeRates.find(rate => rate.class_name === studentClass);
+        
+        if (!classRate) {
+          console.error(`No fee rate found for class: ${studentClass}`);
+          setAutoCalculatedFees(null);
+          return;
+        }
+
+        // Calculate base tuition - always use day student fee
+        const baseTuition = classRate.day_student_fee;
+        
+        // Calculate hostel fee only if student is boarder and class allows boarding
+        const actualHostelFee = (studentType === 'boarding' && classRate.allows_boarding) ? globalHostelFee : 0;
+        
+        // Total fees = day fee + hostel fee (if boarding)
+        const totalFees = baseTuition + actualHostelFee;
+        
+        setAutoCalculatedFees({
+          tuition: baseTuition,
+          hostel: actualHostelFee,
+          total: totalFees
+        });
+        
+        // Auto-fill form fields with calculated fees
+        setTotalFees(String(baseTuition));
+        if (studentType === 'boarding') {
+          setHostelFee(String(actualHostelFee));
+        } else {
+          setHostelFee('');
+        }
+      } catch (error) {
+        console.error('Fee calculation error:', error);
+        setAutoCalculatedFees(null);
+      }
+    } else {
+      setAutoCalculatedFees(null);
+    }
+  }, [studentClass, studentType, classFeeRates, globalHostelFee]);
 
   useEffect(() => {
     if (student) {
@@ -125,15 +207,34 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
           </div>
           <div className="space-y-2">
             <Label>Student Type</Label>
-            <Select value={studentType} onValueChange={(v) => setStudentType(v as 'day' | 'boarding')}>
+            <Select 
+              value={studentType} 
+              onValueChange={(v) => setStudentType(v as 'day' | 'boarding')}
+              disabled={studentClass ? !allowsBoarding(studentClass, classFeeRates) : false}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="day">Day Student</SelectItem>
-                <SelectItem value="boarding">Boarding Student</SelectItem>
+                <SelectItem 
+                  value="boarding" 
+                  disabled={studentClass ? !allowsBoarding(studentClass, classFeeRates) : false}
+                >
+                  Boarding Student
+                  {studentClass && !allowsBoarding(studentClass, classFeeRates) && (
+                    <span className="text-xs text-muted-foreground ml-2">
+                      (Not available for {studentClass})
+                    </span>
+                  )}
+                </SelectItem>
               </SelectContent>
             </Select>
+            {studentClass && !allowsBoarding(studentClass, classFeeRates) && (
+              <p className="text-xs text-orange-600">
+                {studentClass} students cannot board - only day students allowed
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="fees">Tuition Fee (NGN)</Label>
@@ -147,6 +248,11 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
               onChange={(e) => setTotalFees(e.target.value)}
               required
             />
+            {autoCalculatedFees && (
+              <p className="text-xs text-green-600">
+                Auto-calculated: ₦{autoCalculatedFees.tuition.toLocaleString()} for {studentClass}
+              </p>
+            )}
           </div>
           {studentType === 'boarding' && (
             <div className="space-y-2">
@@ -160,8 +266,13 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
                 value={hostelFee}
                 onChange={(e) => setHostelFee(e.target.value)}
               />
+              {autoCalculatedFees && autoCalculatedFees.hostel > 0 && (
+                <p className="text-xs text-green-600">
+                  Auto-calculated: ₦{autoCalculatedFees.hostel.toLocaleString()} for boarding
+                </p>
+              )}
               <p className="text-xs text-muted-foreground">
-                Boarding students pay tuition + hostel fee into the hostel account
+                Boarding students pay tuition + hostel fee into hostel account
               </p>
             </div>
           )}

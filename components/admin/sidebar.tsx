@@ -11,6 +11,9 @@ import {
   Menu,
   X,
   UserCog,
+  Package,
+  Settings,
+  RefreshCw,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/components/auth-provider';
@@ -25,6 +28,11 @@ const baseNavItems = [
   { href: '/admin/students', label: 'Students', icon: Users },
   { href: '/admin/payments', label: 'Payments', icon: CreditCard },
   { href: '/admin/review', label: 'Review Queue', icon: ShieldCheck },
+  { href: '/admin/fee-settings', label: 'Fee Settings', icon: Settings },
+];
+
+const superAdminNavItems = [
+  { href: '/admin/term-reset', label: 'Term Reset', icon: RefreshCw },
 ];
 
 export function AdminSidebar() {
@@ -33,7 +41,7 @@ export function AdminSidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = isSuperAdmin
-    ? [...baseNavItems, { href: '/admin/staff', label: 'Staff', icon: UserCog }]
+    ? [...baseNavItems, { href: '/admin/staff', label: 'Staff', icon: UserCog }, { href: '/admin/supplementary', label: 'Supplementary Items', icon: Package }, ...superAdminNavItems]
     : baseNavItems;
 
   return (

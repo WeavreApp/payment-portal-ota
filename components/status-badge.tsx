@@ -59,7 +59,8 @@ export function PaymentStatusBadge({
   studentType?: 'day' | 'boarding';
   hostelFee?: number;
 }) {
-  const actualTotalFees = totalFees + (studentType === 'boarding' && hostelFee ? hostelFee : 0);
+  // totalFees already includes hostelFee for boarding students
+  const actualTotalFees = totalFees;
   
   if (totalPaid >= actualTotalFees && actualTotalFees > 0)
     return <StatusBadge status="success" label="Fully Paid" />;

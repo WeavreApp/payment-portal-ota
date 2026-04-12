@@ -84,8 +84,10 @@ export default function FeeSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [classFeeRates, setClassFeeRates] = useState<ClassFeeRate[]>([]);
   const [globalHostelFee, setGlobalHostelFee] = useState('250000');
+  const [ss3HostelFee, setSS3HostelFee] = useState('750000');
   const [saving, setSaving] = useState(false);
   const [editingRates, setEditingRates] = useState<{[key: string]: {dayFee: string, boarderFee: string}}>({});
+  const [massUpdating, setMassUpdating] = useState(false);
 
   useEffect(() => {
     loadFeeSettings();
@@ -114,6 +116,19 @@ export default function FeeSettingsPage() {
       
       if (hostelData) {
         setGlobalHostelFee(hostelData.setting_value);
+      }
+
+      // Load SS3 hostel fee
+      const { data: ss3HostelData, error: ss3HostelError } = await supabase
+        .from('fee_settings')
+        .select('setting_value')
+        .eq('setting_key', 'ss3_hostel_fee')
+        .single();
+
+      if (ss3HostelError && ss3HostelError.code !== 'PGRST116') throw ss3HostelError;
+      
+      if (ss3HostelData) {
+        setSS3HostelFee(ss3HostelData.setting_value);
       }
 
       // Initialize editing rates - only day fees needed
@@ -149,7 +164,28 @@ export default function FeeSettingsPage() {
       await loadFeeSettings();
     } catch (error: any) {
       toast.error('Failed to update global hostel fee');
-      console.error('Update hostel fee error:', error);
+      console.error('Update global hostel fee error:', error);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function updateSS3HostelFee() {
+    setSaving(true);
+    try {
+      const { error } = await supabase
+        .from('fee_settings')
+        .upsert({ 
+          setting_key: 'ss3_hostel_fee', 
+          setting_value: ss3HostelFee 
+        });
+
+      if (error) throw error;
+      toast.success('SS3 hostel fee updated');
+      await loadFeeSettings();
+    } catch (error: any) {
+      toast.error('Failed to update SS3 hostel fee');
+      console.error('Update SS3 hostel fee error:', error);
     } finally {
       setSaving(false);
     }
@@ -196,6 +232,156 @@ export default function FeeSettingsPage() {
 
   function resetFees() {
     loadFeeSettings();
+  }
+
+  async function updateSingleClass(className: string, newDayFee: number) {
+    if (isNaN(newDayFee) || newDayFee < 0) {
+      toast.error('Invalid fee amount');
+      return;
+    }
+
+    const classRate = classFeeRates.find(r => r.class_name === className);
+    if (!classRate) {
+      toast.error(`Class ${className} not found`);
+      return;
+    }
+
+    // First save the class fee rate
+    const { error: rateError } = await supabase
+      .from('class_fee_rates')
+      .update({ day_student_fee: newDayFee })
+      .eq('class_name', className);
+
+    if (rateError) {
+      toast.error(`Failed to update ${className} fee rate`);
+      console.error(rateError);
+      return;
+    }
+
+    // Then update all students in this class
+    const globalHostel = parseFloat(globalHostelFee) || 250000;
+    const ss3Hostel = parseFloat(ss3HostelFee) || 750000;
+
+    const { data: students, error: fetchError } = await supabase
+      .from('students')
+      .select('id, student_type, neco_fee')
+      .eq('class', className);
+
+    if (fetchError || !students) {
+      toast.error(`Failed to fetch students for ${className}`);
+      return;
+    }
+
+    let updatedCount = 0;
+    const BATCH_SIZE = 50;
+
+    for (let i = 0; i < students.length; i += BATCH_SIZE) {
+      const batch = students.slice(i, i + BATCH_SIZE);
+
+      const updatePromises = batch.map(student => {
+        // Only add NECO fee for SS3 classes (not JSS3), ignore neco_fee in database for non-SS3
+        const isSS3 = className.startsWith('SS3');
+        const necoFee = isSS3 ? (student.neco_fee || 0) : 0;
+        const isBoarding = student.student_type === 'boarding' && classRate.allows_boarding;
+        // Use SS3 hostel fee (750k) for SS3, global hostel fee (250k) for others
+        const actualHostelFee = isBoarding
+          ? (isSS3 ? ss3Hostel : globalHostel)
+          : 0;
+        const newTotalFee = newDayFee + actualHostelFee + necoFee;
+
+        return supabase
+          .from('students')
+          .update({
+            total_fees: newTotalFee,
+            hostel_fee: actualHostelFee,
+            neco_fee: necoFee // Reset neco_fee to 0 for non-SS3, keep for SS3
+          })
+          .eq('id', student.id);
+      });
+
+      const results = await Promise.all(updatePromises);
+      results.forEach(result => {
+        if (!result.error) updatedCount++;
+      });
+    }
+
+    toast.success(`Updated ${className}: ${updatedCount} students updated`);
+    await loadFeeSettings();
+  }
+
+  async function massUpdateStudents() {
+    if (!confirm('This will update ALL existing students to match the new class fees. Continue?')) {
+      return;
+    }
+
+    setMassUpdating(true);
+    let updatedCount = 0;
+    const BATCH_SIZE = 50; // Update 50 students at a time in parallel
+
+    try {
+      for (const [className, fees] of Object.entries(editingRates)) {
+        const newDayFee = parseFloat(fees.dayFee);
+        if (isNaN(newDayFee) || newDayFee < 0) continue;
+
+        const classRate = classFeeRates.find(r => r.class_name === className);
+        if (!classRate) continue;
+
+        const globalHostel = parseFloat(globalHostelFee) || 250000;
+        const ss3Hostel = parseFloat(ss3HostelFee) || 750000;
+
+        // Get all students in this class
+        const { data: students, error: fetchError } = await supabase
+          .from('students')
+          .select('id, student_type, neco_fee')
+          .eq('class', className);
+
+        if (fetchError || !students) {
+          console.error(`Error fetching students for ${className}:`, fetchError);
+          continue;
+        }
+
+        // Process in batches for better performance
+        for (let i = 0; i < students.length; i += BATCH_SIZE) {
+          const batch = students.slice(i, i + BATCH_SIZE);
+
+          // Update batch in parallel
+          const updatePromises = batch.map(student => {
+            // Only add NECO fee for SS3 classes (not JSS3)
+            const isSS3 = className.startsWith('SS3');
+            const necoFee = isSS3 ? (student.neco_fee || 0) : 0;
+            const isBoarding = student.student_type === 'boarding' && classRate.allows_boarding;
+            // Use SS3 hostel fee (750k) for SS3, global hostel fee (250k) for others
+            const actualHostelFee = isBoarding
+              ? (isSS3 ? ss3Hostel : globalHostel)
+              : 0;
+            const newTotalFee = newDayFee + actualHostelFee + necoFee;
+
+            return supabase
+              .from('students')
+              .update({
+                total_fees: newTotalFee,
+                hostel_fee: actualHostelFee,
+                neco_fee: necoFee
+              })
+              .eq('id', student.id);
+          });
+
+          const results = await Promise.all(updatePromises);
+
+          // Count successful updates
+          results.forEach(result => {
+            if (!result.error) updatedCount++;
+          });
+        }
+      }
+
+      toast.success(`Updated ${updatedCount} students with new fee rates`);
+    } catch (error: any) {
+      toast.error('Failed to mass update students');
+      console.error('Mass update error:', error);
+    } finally {
+      setMassUpdating(false);
+    }
   }
 
   if (!isSuperAdmin) {
@@ -255,6 +441,44 @@ export default function FeeSettingsPage() {
           </div>
           <p className="text-sm text-muted-foreground">
             This fee applies to all boarding students in addition to their class tuition.
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* SS3 Hostel Fee */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <DollarSign className="h-5 w-5" />
+            SS3 Hostel Fee
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <Label htmlFor="ss3-hostel-fee">SS3 Hostel Fee (NGN)</Label>
+              <Input
+                id="ss3-hostel-fee"
+                type="number"
+                min="0"
+                step="0.01"
+                value={ss3HostelFee}
+                onChange={(e) => setSS3HostelFee(e.target.value)}
+                placeholder="750000"
+              />
+            </div>
+            <Button 
+              onClick={updateSS3HostelFee}
+              disabled={saving}
+              className="mt-6"
+            >
+              {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Save className="mr-2 h-4 w-4" />
+              Update
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            This fee applies specifically to SS3 boarding students instead of the global hostel fee.
           </p>
         </CardContent>
       </Card>
@@ -321,6 +545,23 @@ export default function FeeSettingsPage() {
                             </p>
                           </div>
                         )}
+
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => {
+                            const newFee = parseFloat(editing.dayFee);
+                            // Update all subclasses in this group
+                            subclasses.forEach(subclass => {
+                              updateSingleClass(subclass, newFee);
+                            });
+                          }}
+                          disabled={saving || massUpdating}
+                          className="mt-5"
+                        >
+                          <Save className="h-4 w-4 mr-1" />
+                          Update Group
+                        </Button>
                       </div>
                     </div>
                   );
@@ -367,6 +608,17 @@ export default function FeeSettingsPage() {
                             </p>
                           </div>
                         )}
+
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => updateSingleClass(className, parseFloat(editing.dayFee))}
+                          disabled={saving || massUpdating}
+                          className="mt-5"
+                        >
+                          <Save className="h-4 w-4 mr-1" />
+                          Update Class
+                        </Button>
                       </div>
                     </div>
                   );
@@ -386,9 +638,20 @@ export default function FeeSettingsPage() {
               Save All Class Fees
             </Button>
             <Button 
+              variant="secondary"
+              onClick={massUpdateStudents}
+              disabled={massUpdating || saving}
+              size="lg"
+              className="bg-orange-600 hover:bg-orange-700 text-white"
+            >
+              {massUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Users className="mr-2 h-4 w-4" />
+              Mass Update Students
+            </Button>
+            <Button 
               variant="outline"
               onClick={resetFees}
-              disabled={saving}
+              disabled={saving || massUpdating}
             >
               Reset Changes
             </Button>

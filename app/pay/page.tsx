@@ -32,6 +32,7 @@ import {
   SCHOOL_NAME,
   SCHOOL_LOGO,
   getStudentLevel,
+  shouldShowItem,
   type BankAccount,
   type MiscItem,
 } from '@/lib/constants';
@@ -87,23 +88,22 @@ export default function PayPage() {
     s: StudentResult,
     accounts: BankAccount[]
   ): BankAccount[] {
-    const level = getStudentLevel(s.class);
     if (s.student_type === 'boarding') {
       return accounts.filter((b) => b.student_level === 'hostel');
     }
     if (mode === 'tuition') {
-      return accounts.filter((b) => b.student_level === level && b.accepts_tuition);
+      return accounts.filter((b) => b.accepts_tuition);
     }
-    return accounts.filter((b) => b.student_level === level && b.accepts_misc);
+    return accounts.filter((b) => b.accepts_misc);
   }
 
   const fetchSupportingData = useCallback(async (s: StudentResult) => {
     const level = getStudentLevel(s.class);
 
     const { data: banks } = await supabase
-      .from('bank_accounts')
-      .select('*')
-      .order('display_order');
+      .rpc('get_bank_accounts', {
+        p_student_level: level
+      });
 
     const accounts = (banks ?? []) as BankAccount[];
     setBankAccounts(accounts);
@@ -111,10 +111,11 @@ export default function PayPage() {
     const { data: items } = await supabase
       .from('misc_items')
       .select('*')
-      .eq('student_level', level)
       .order('name');
 
-    if (items) setMiscItems(items as MiscItem[]);
+    // Filter items based on student's class
+    const filteredItems = items ? items.filter(item => shouldShowItem(s.class, item.student_level as any)) : [];
+    setMiscItems(filteredItems as MiscItem[]);
 
     const tuitionBanks = getAvailableBanksFor('tuition', s, accounts);
     setSelectedBankId(tuitionBanks[0]?.id ?? '');

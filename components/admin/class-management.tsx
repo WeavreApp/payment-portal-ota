@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, ChevronDown, ChevronRight, School, Users } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface Class {
   id: string;
@@ -78,7 +79,7 @@ export default function ClassManagement() {
 
   async function updateClassFee(classId: string) {
     if (!newFee || isNaN(parseFloat(newFee))) {
-      alert('Please enter a valid fee amount');
+      toast.error('Please enter a valid fee amount');
       return;
     }
 
@@ -89,17 +90,17 @@ export default function ClassManagement() {
         .eq('id', classId);
 
       if (error) {
-        alert('Failed to update fee: ' + error.message);
+        toast.error('Failed to update fee: ' + error.message);
         return;
       }
 
-      alert('Fee updated successfully');
+      toast.success('Fee updated successfully');
       setEditingClass(null);
       setNewFee('');
       loadClasses();
     } catch (err) {
       console.error('Failed to update fee:', err);
-      alert('Failed to update fee');
+      toast.error('Failed to update fee');
     }
   }
 

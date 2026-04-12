@@ -19,10 +19,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Loader as Loader2, Upload } from 'lucide-react';
-import { PAYMENT_METHODS, type Student } from '@/lib/constants';
+import { PAYMENT_METHODS, type Student, type BankAccount } from '@/lib/constants';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 import { hashFile } from '@/lib/hash-file';
+import { Card, CardContent } from '@/components/ui/card';
+import { Building2, Copy, Check } from 'lucide-react';
 
 interface PaymentDialogProps {
   open: boolean;
@@ -39,6 +41,8 @@ export function PaymentDialog({ open, onClose, onSaved }: PaymentDialogProps) {
   const [notes, setNotes] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
+  const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
+  const [copiedAccountId, setCopiedAccountId] = useState<string | null>(null);
 
   useEffect(() => {
     if (open) {
@@ -47,8 +51,27 @@ export function PaymentDialog({ open, onClose, onSaved }: PaymentDialogProps) {
         .select('*')
         .order('full_name')
         .then(({ data }) => setStudents((data ?? []) as Student[]));
+      
+      // Load bank accounts
+      supabase
+        .from('bank_accounts')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order')
+        .then(({ data }) => setBankAccounts((data ?? []) as BankAccount[]));
     }
   }, [open]);
+
+  const copyAccountNumber = async (accountNumber: string, accountId: string) => {
+    try {
+      await navigator.clipboard.writeText(accountNumber);
+      setCopiedAccountId(accountId);
+      toast.success('Account number copied to clipboard');
+      setTimeout(() => setCopiedAccountId(null), 2000);
+    } catch (error) {
+      toast.error('Failed to copy account number');
+    }
+  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -154,6 +177,91 @@ export function PaymentDialog({ open, onClose, onSaved }: PaymentDialogProps) {
               </Select>
             </div>
           </div>
+
+          {/* Bank Accounts Display */}
+          {method === 'Bank Transfer' && bankAccounts.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 bg-primary/10 p-3 rounded-lg">
+                <Building2 className="h-5 w-5 text-primary" />
+                <Label className="text-base font-semibold">Bank Account Details</Label>
+              </div>
+              
+              <div className="space-y-3">
+                {bankAccounts.map((account) => (
+                  <Card key={account.id} className="border-2 border-primary/20 shadow-md">
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        {/* Bank Name Header */}
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-bold text-lg text-primary">{account.bank_name}</h4>
+                          {account.student_level !== 'all' && (
+                            <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-medium capitalize">
+                              {account.student_level}
+                            </span>
+                          )}
+                        </div>
+                        
+                        {/* Account Name */}
+                        <div className="bg-muted/30 p-3 rounded-lg">
+                          <p className="text-xs text-muted-foreground font-medium mb-1">Account Name</p>
+                          <p className="font-semibold text-base">{account.account_name}</p>
+                        </div>
+                        
+                        {/* Account Number - Most Prominent */}
+                        <div className="bg-gradient-to-r from-blue-50 to-green-50 p-4 rounded-lg border border-blue-200">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <p className="text-xs text-muted-foreground font-medium mb-2">Account Number</p>
+                              <p className="font-mono font-bold text-xl tracking-wider text-foreground">
+                                {account.account_number}
+                              </p>
+                            </div>
+                            <Button
+                              onClick={() => copyAccountNumber(account.account_number, account.id)}
+                              className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 h-auto flex flex-col items-center gap-1"
+                            >
+                              {copiedAccountId === account.id ? (
+                                <><Check className="h-5 w-5" /><span className="text-xs">Copied!</span></>
+                              ) : (
+                                <><Copy className="h-5 w-5" /><span className="text-xs">Copy</span></>
+                              )}
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Payment Types */}
+                        <div className="flex flex-wrap gap-2">
+                          {account.accepts_tuition && (
+                            <span className="text-sm px-3 py-1 rounded-full bg-blue-100 text-blue-800 font-medium">
+                              Tuition
+                            </span>
+                          )}
+                          {account.accepts_misc && (
+                            <span className="text-sm px-3 py-1 rounded-full bg-green-100 text-green-800 font-medium">
+                              Miscellaneous
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              
+              {/* Instructions */}
+              <div className="bg-amber-50 border border-amber-200 p-4 rounded-lg">
+                <p className="text-sm font-medium text-amber-800 mb-2">
+                  How to Pay:
+                </p>
+                <ol className="text-sm text-amber-700 space-y-1 list-decimal list-inside">
+                  <li>Copy any account number above by clicking the "Copy" button</li>
+                  <li>Make payment to the chosen bank account</li>
+                  <li>Take a screenshot or photo of the payment receipt</li>
+                  <li>Upload the receipt as proof of payment below</li>
+                </ol>
+              </div>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label>Date</Label>

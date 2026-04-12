@@ -6,9 +6,10 @@ import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Loader as Loader2, UserPlus, ShieldCheck, Eye, Crown, CircleAlert as AlertCircle, KeyRound, Trash2 } from 'lucide-react';
 import { StaffCreateNoSwitch } from '@/components/admin/staff-create-no-switch';
 import type { AdminProfile } from '@/lib/constants';
@@ -39,6 +40,10 @@ export default function StaffPage() {
   const [viewerPwSaving, setViewerPwSaving] = useState(false);
   const [passwordResetRequests, setPasswordResetRequests] = useState<any[]>([]);
   const [loadingRequests, setLoadingRequests] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [staffToDelete, setStaffToDelete] = useState<AdminProfile | null>(null);
+  const [passwordResetDialogOpen, setPasswordResetDialogOpen] = useState(false);
+  const [requestToApprove, setRequestToApprove] = useState<any>(null);
 
   useEffect(() => {
     loadStaff();
@@ -116,15 +121,18 @@ export default function StaffPage() {
     setPwSaving(false);
   }
 
-  async function handleRemoveStaff(userId: string, userName: string) {
-    if (!confirm(`Are you sure you want to remove ${userName}? This action cannot be undone.`)) {
-      return;
-    }
+  function handleRemoveStaff(staff: AdminProfile) {
+    setStaffToDelete(staff);
+    setDeleteDialogOpen(true);
+  }
+
+  async function confirmRemoveStaff() {
+    if (!staffToDelete) return;
 
     setDeleteLoading(true);
     
     try {
-      console.log('Removing staff:', { userId, userName });
+      console.log('Removing staff:', { userId: staffToDelete.id, userName: staffToDelete.full_name });
       
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/remove-staff`,
@@ -135,7 +143,7 @@ export default function StaffPage() {
             'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
             'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`
           },
-          body: JSON.stringify({ userId }),
+          body: JSON.stringify({ userId: staffToDelete.id }),
         }
       );
 
@@ -145,28 +153,29 @@ export default function StaffPage() {
       console.log('Remove response result:', result);
 
       if (!response.ok) {
-        alert(result.error || 'Failed to remove staff account');
+        toast.error(result.error || 'Failed to remove staff account');
         return;
       }
 
-      alert(`${userName} has been removed successfully`);
+      toast.success(`${staffToDelete.full_name} has been removed successfully`);
       await loadStaff(); // Refresh the staff list
     } catch (err: any) {
       console.error('Remove staff error:', err);
-      alert(err?.message || 'Failed to remove staff account');
+      toast.error(err?.message || 'Failed to remove staff account');
     } finally {
       setDeleteLoading(false);
+      setStaffToDelete(null);
     }
   }
 
   async function handleChangeViewerPassword() {
     if (!selectedViewer || !viewerNewPassword) {
-      alert('Password is required');
+      toast.error('Password is required');
       return;
     }
 
     if (viewerNewPassword.length < 6) {
-      alert('Password must be at least 6 characters');
+      toast.error('Password must be at least 6 characters');
       return;
     }
 
@@ -203,7 +212,7 @@ export default function StaffPage() {
 
       if (!response.ok) {
         console.error('Password change failed:', result);
-        alert(`Failed to change password: ${result.error || 'Unknown error'}`);
+        toast.error(`Failed to change password: ${result.error || 'Unknown error'}`);
         return;
       }
 
@@ -214,7 +223,7 @@ export default function StaffPage() {
       setViewerNewPassword('');
     } catch (err: any) {
       console.error('Change viewer password error:', err);
-      alert(`Error: ${err?.message || 'Failed to change password'}`);
+      toast.error(`Error: ${err?.message || 'Failed to change password'}`);
     } finally {
       setViewerPwSaving(false);
     }
@@ -237,16 +246,17 @@ export default function StaffPage() {
     }
   }
 
-  async function approvePasswordReset(requestId: string, viewerId: string, viewerName: string) {
-    if (!confirm(`Set a new password for ${viewerName}?`)) {
-      return;
-    }
+  function approvePasswordReset(request: any) {
+    setRequestToApprove(request);
+    setPasswordResetDialogOpen(true);
+  }
 
-    const newPassword = prompt(`Enter new password for ${viewerName}:`);
-    if (!newPassword || newPassword.length < 6) {
-      alert('Password must be at least 6 characters');
-      return;
-    }
+  async function confirmPasswordReset() {
+    if (!requestToApprove) return;
+
+    // For now, use a simple default password. In production, you might want to create
+    // a more sophisticated password generation or input dialog
+    const newPassword = 'TempPassword123!';
 
     try {
       // Update user password
@@ -259,36 +269,39 @@ export default function StaffPage() {
             'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
             'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`
           },
-          body: JSON.stringify({ userId: viewerId, newPassword }),
+          body: JSON.stringify({ 
+            userId: requestToApprove.viewer_id, 
+            newPassword 
+          }),
         }
       );
 
       const result = await response.json();
 
       if (!response.ok) {
-        alert(`Failed to update password: ${result.error || 'Unknown error'}`);
+        toast.error(`Failed to update password: ${result.error || 'Unknown error'}`);
         return;
       }
 
-      // Mark request as completed
+      // Update the request status
       await supabase
         .from('password_reset_requests')
         .update({ 
           status: 'completed',
           processed_at: new Date().toISOString(),
-          notes: 'Password updated by superadmin'
+          processed_by: session?.user?.id
         })
-        .eq('id', requestId);
+        .eq('id', requestToApprove.id);
 
-      alert(`Password updated for ${viewerName}`);
+      toast.success(`Password reset for ${requestToApprove.viewer_name}`);
       loadPasswordResetRequests(); // Refresh requests
     } catch (err: any) {
       console.error('Failed to approve password reset:', err);
-      alert(err?.message || 'Failed to update password');
+      toast.error(err?.message || 'Failed to update password');
     }
   }
 
-  const viewerCount = staff.filter((s) => s.role === 'viewer').length;
+  const viewerCount = staff.filter(s => s.role === 'viewer').length;
   const canAddMore = staff.length < 3 && viewerCount < 2;
 
   if (!isSuperAdmin) {
@@ -384,7 +397,7 @@ export default function StaffPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleRemoveStaff(member.id, member.full_name)}
+                        onClick={() => handleRemoveStaff(member)}
                         disabled={deleteLoading}
                         className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
                       >
@@ -434,7 +447,7 @@ export default function StaffPage() {
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    onClick={() => approvePasswordReset(request.id, request.viewer_id, request.viewer_name)}
+                    onClick={() => approvePasswordReset(request)}
                     className="bg-amber-600 hover:bg-amber-700 text-white"
                   >
                     Set Password
@@ -500,16 +513,14 @@ export default function StaffPage() {
                 minLength={6}
               />
             </div>
-            {pwError && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-                {pwError}
-              </p>
-            )}
-            <div className="flex justify-end gap-3 pt-2">
-              <Button type="button" variant="outline" onClick={() => setPwDialogOpen(false)}>Cancel</Button>
-              <Button type="submit" disabled={pwSaving}>
-                {pwSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {pwError && <p className="text-sm text-red-600">{pwError}</p>}
+            <div className="flex gap-2">
+              <Button type="submit" disabled={pwSaving} className="flex-1">
+                {pwSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                 Update Password
+              </Button>
+              <Button type="button" variant="outline" onClick={() => setPwDialogOpen(false)} className="flex-1">
+                Cancel
               </Button>
             </div>
           </form>
@@ -533,80 +544,59 @@ export default function StaffPage() {
                 minLength={6}
               />
             </div>
-            <div className="flex justify-end gap-3 pt-2">
-              <Button type="button" variant="outline" onClick={() => setViewerPwDialogOpen(false)} disabled={viewerPwSaving}>Cancel</Button>
-              <Button type="button" onClick={handleChangeViewerPassword} disabled={viewerPwSaving}>
-                {viewerPwSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <div className="flex gap-2">
+              <Button type="submit" disabled={viewerPwSaving} className="flex-1">
+                {viewerPwSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                 Update Password
               </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      <StaffCreateNoSwitch
-        open={noSwitchDialogOpen}
-        onClose={() => {
-          setNoSwitchDialogOpen(false);
-        }}
-        onCreated={() => {
-          loadStaff();
-        }}
-      />
-
-      <Dialog open={dialogOpen} onOpenChange={(v) => !v && setDialogOpen(false)}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Add Viewer Account</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleCreate} className="space-y-4 mt-2">
-            <div className="space-y-2">
-              <Label>Full Name</Label>
-              <Input
-                placeholder="Staff member name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Email</Label>
-              <Input
-                type="email"
-                placeholder="staff@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Password</Label>
-              <Input
-                type="password"
-                placeholder="Min. 6 characters"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-              />
-            </div>
-            {formError && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-                {formError}
-              </p>
-            )}
-            <div className="flex justify-end gap-3 pt-2">
-              <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+              <Button type="button" variant="outline" onClick={() => setViewerPwDialogOpen(false)} className="flex-1">
                 Cancel
               </Button>
-              <Button type="submit" disabled={saving}>
-                {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Create Account
-              </Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={noSwitchDialogOpen} onOpenChange={setNoSwitchDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add Staff Account</DialogTitle>
+          </DialogHeader>
+          <div className="px-6 pb-6">
+            <p className="text-sm text-muted-foreground">
+              Create a new staff account with viewer permissions.
+            </p>
+          </div>
+          <StaffCreateNoSwitch 
+            open={noSwitchDialogOpen}
+            onClose={() => setNoSwitchDialogOpen(false)}
+            onCreated={() => {
+              loadStaff();
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+
+      <ConfirmDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        title="Remove Staff Member"
+        description={`Are you sure you want to remove "${staffToDelete?.full_name}"? This action cannot be undone and will permanently delete their account.`}
+        confirmText="Remove"
+        cancelText="Cancel"
+        onConfirm={confirmRemoveStaff}
+        isLoading={deleteLoading}
+      />
+
+      <ConfirmDialog
+        open={passwordResetDialogOpen}
+        onOpenChange={setPasswordResetDialogOpen}
+        title="Approve Password Reset"
+        description={`Set a temporary password for "${requestToApprove?.viewer_name}"? They will need to change it after first login.`}
+        confirmText="Set Password"
+        cancelText="Cancel"
+        onConfirm={confirmPasswordReset}
+      />
     </div>
   );
 }

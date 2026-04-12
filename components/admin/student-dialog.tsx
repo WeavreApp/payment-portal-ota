@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Loader as Loader2 } from 'lucide-react';
-import { CLASS_LIST, type Student, calculateStudentFees, getFeeForClass, allowsBoarding } from '@/lib/constants';
+import { CLASS_LIST, type Student, calculateStudentFees, getFeeForClass, allowsBoarding, NECO_FEE } from '@/lib/constants';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 
@@ -35,10 +35,12 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
   const [studentType, setStudentType] = useState<'day' | 'boarding'>('day');
   const [totalFees, setTotalFees] = useState('');
   const [hostelFee, setHostelFee] = useState('');
+  const [includeNECO, setIncludeNECO] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [autoCalculatedFees, setAutoCalculatedFees] = useState<{ tuition: number; hostel: number; total: number } | null>(null);
+  const [autoCalculatedFees, setAutoCalculatedFees] = useState<{ tuition: number; hostel: number; necoFee: number; total: number } | null>(null);
   const [classFeeRates, setClassFeeRates] = useState<any[]>([]);
   const [globalHostelFee, setGlobalHostelFee] = useState(250000);
+  const [ss3HostelFee, setSS3HostelFee] = useState(750000);
 
   // Load current fee rates from database
   useEffect(() => {
@@ -64,6 +66,19 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
         
         if (hostelData) {
           setGlobalHostelFee(parseFloat(hostelData.setting_value));
+        }
+
+        // Load SS3 hostel fee
+        const { data: ss3HostelData, error: ss3HostelError } = await supabase
+          .from('fee_settings')
+          .select('setting_value')
+          .eq('setting_key', 'ss3_hostel_fee')
+          .single();
+
+        if (ss3HostelError && ss3HostelError.code !== 'PGRST116') throw ss3HostelError;
+        
+        if (ss3HostelData) {
+          setSS3HostelFee(parseFloat(ss3HostelData.setting_value));
         }
       } catch (error) {
         console.error('Error loading fee rates:', error);
@@ -92,19 +107,32 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
         const baseTuition = classRate.day_student_fee;
         
         // Calculate hostel fee only if student is boarder and class allows boarding
-        const actualHostelFee = (studentType === 'boarding' && classRate.allows_boarding) ? globalHostelFee : 0;
+        let actualHostelFee = 0;
+        if (studentType === 'boarding' && classRate.allows_boarding) {
+          // Use SS3-specific hostel fee for SS3 students
+          if (studentClass.includes('SS3')) {
+            actualHostelFee = ss3HostelFee; // SS3-specific hostel fee from settings
+          } else {
+            actualHostelFee = globalHostelFee; // Use global fee for other classes
+          }
+        }
         
-        // Total fees = day fee + hostel fee (if boarding)
-        const totalFees = baseTuition + actualHostelFee;
+        // Add NECO fee only if student is in SS3 and NECO is included
+        const isSS3 = studentClass.includes('SS3');
+        const necoFee = includeNECO && isSS3 ? NECO_FEE : 0;
+        
+        // Total fees = day fee + hostel fee (if boarding) + NECO fee (if SS3)
+        const totalFees = baseTuition + actualHostelFee + necoFee;
         
         setAutoCalculatedFees({
           tuition: baseTuition,
           hostel: actualHostelFee,
+          necoFee,
           total: totalFees
         });
         
         // Auto-fill form fields with calculated fees
-        setTotalFees(String(baseTuition));
+        setTotalFees(String(baseTuition + necoFee));
         if (studentType === 'boarding') {
           setHostelFee(String(actualHostelFee));
         } else {
@@ -117,7 +145,7 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
     } else {
       setAutoCalculatedFees(null);
     }
-  }, [studentClass, studentType, classFeeRates, globalHostelFee]);
+  }, [studentClass, studentType, classFeeRates, globalHostelFee, includeNECO]);
 
   useEffect(() => {
     if (student) {
@@ -126,12 +154,16 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
       setStudentType(student.student_type ?? 'day');
       setTotalFees(String(student.total_fees));
       setHostelFee(student.hostel_fee ? String(student.hostel_fee) : '');
+      // Set NECO checkbox based on whether student has NECO fee
+      const isSS3 = student.class.includes('SS3');
+      setIncludeNECO(isSS3 && (student.neco_fee || 0) > 0);
     } else {
       setFullName('');
       setStudentClass('');
       setStudentType('day');
       setTotalFees('');
       setHostelFee('');
+      setIncludeNECO(false);
     }
   }, [student, open]);
 
@@ -139,12 +171,55 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
     e.preventDefault();
     setSaving(true);
 
+    // Calculate NECO fee
+    const isSS3 = studentClass.includes('SS3');
+    const necoFeeAmount = includeNECO && isSS3 ? NECO_FEE : 0;
+    
+    // DEBUG: Log the calculation
+    console.log('DEBUG handleSubmit:', {
+      studentClass,
+      isSS3,
+      includeNECO,
+      necoFeeAmount,
+      NECO_FEE,
+      autoCalculatedFees
+    });
+    
+    // Always use calculated values from autoCalculatedFees
+    // If autoCalculatedFees is null, recalculate manually
+    let baseTuition: number;
+    let actualHostelFee: number;
+    
+    if (autoCalculatedFees) {
+      baseTuition = autoCalculatedFees.tuition;
+      actualHostelFee = autoCalculatedFees.hostel;
+    } else {
+      // Manual calculation as fallback
+      const classRate = classFeeRates.find(rate => rate.class_name === studentClass);
+      baseTuition = classRate ? classRate.day_student_fee : 645000;
+      
+      if (studentType === 'boarding' && classRate?.allows_boarding) {
+        actualHostelFee = studentClass.includes('SS3') ? ss3HostelFee : globalHostelFee;
+      } else {
+        actualHostelFee = 0;
+      }
+    }
+    
+    const calculatedTotal = baseTuition + actualHostelFee + necoFeeAmount;
+    console.log('DEBUG payload:', {
+      baseTuition,
+      actualHostelFee,
+      necoFeeAmount,
+      calculatedTotal
+    });
+    
     const payload = {
       full_name: fullName.trim(),
       class: studentClass,
       student_type: studentType,
-      total_fees: parseFloat(totalFees),
-      hostel_fee: studentType === 'boarding' && hostelFee ? parseFloat(hostelFee) : 0,
+      total_fees: calculatedTotal,
+      hostel_fee: actualHostelFee,
+      neco_fee: necoFeeAmount,
     };
 
     if (student) {
@@ -250,7 +325,7 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
             />
             {autoCalculatedFees && (
               <p className="text-xs text-green-600">
-                Auto-calculated: ₦{autoCalculatedFees.tuition.toLocaleString()} for {studentClass}
+                Auto-calculated: ₦{autoCalculatedFees.tuition.toLocaleString()} tuition{autoCalculatedFees.necoFee > 0 ? ` + ₦${autoCalculatedFees.necoFee.toLocaleString()} NECO` : ''} for {studentClass}
               </p>
             )}
           </div>
@@ -268,7 +343,7 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
               />
               {autoCalculatedFees && autoCalculatedFees.hostel > 0 && (
                 <p className="text-xs text-green-600">
-                  Auto-calculated: ₦{autoCalculatedFees.hostel.toLocaleString()} for boarding
+                  Auto-calculated: ₦{autoCalculatedFees.hostel.toLocaleString()} for boarding{studentClass.includes('SS3') ? ' (SS3 rate)' : ''}
                 </p>
               )}
               <p className="text-xs text-muted-foreground">
@@ -276,6 +351,30 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
               </p>
             </div>
           )}
+          
+          {/* NECO Fee Option - Only show for SS3 students */}
+          {studentClass && studentClass.includes('SS3') && (
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="includeNECO"
+                  checked={includeNECO}
+                  onChange={(e) => setIncludeNECO(e.target.checked)}
+                  className="h-4 w-4 text-primary border-primary rounded focus:ring-primary"
+                />
+                <Label htmlFor="includeNECO" className="text-sm font-medium">
+                  Include NECO Exam Fee (₦40,000)
+                </Label>
+              </div>
+              {includeNECO && (
+                <p className="text-xs text-green-600">
+                  NECO fee will be added to total fees for SS3 students
+                </p>
+              )}
+            </div>
+          )}
+          
           <div className="flex justify-end gap-3 pt-2">
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel

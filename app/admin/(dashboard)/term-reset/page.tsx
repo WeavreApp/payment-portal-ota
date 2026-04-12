@@ -83,30 +83,40 @@ export default function TermResetPage() {
 
     setLoading(true);
     try {
-      // Reset all student payment statuses
+      // First, get all SS3 student IDs to exclude them
+      const { data: ss3Students, error: ss3Error } = await supabase
+        .from('students')
+        .select('id')
+        .like('class', 'SS3%');
+
+      if (ss3Error) throw ss3Error;
+
+      const ss3Ids = ss3Students?.map(s => s.id) || [];
+
+      // Reset all student payment statuses (excluding SS3 - final year students continue)
       const { error: resetError } = await supabase
         .from('students')
         .update({ 
           payment_status: 'outstanding',
           balance_paid: 0 
         })
-        .neq('id', ''); // Update all records
+        .not('id', 'in', `(${ss3Ids.join(',')})`); // Exclude SS3 students
 
       if (resetError) throw resetError;
 
-      // Delete all payment records
+      // Delete all payment records (excluding SS3 student payments)
       const { error: deleteError } = await supabase
         .from('payments')
         .delete()
-        .neq('id', ''); // Delete all records
+        .not('student_id', 'in', `(${ss3Ids.join(',')})`);
 
       if (deleteError) throw deleteError;
 
-      // Delete all fee calculations
+      // Delete all fee calculations (excluding SS3 student calculations)
       const { error: calcDeleteError } = await supabase
         .from('fee_calculations')
         .delete()
-        .neq('id', ''); // Delete all records
+        .not('student_id', 'in', `(${ss3Ids.join(',')})`);
 
       if (calcDeleteError) throw calcDeleteError;
 

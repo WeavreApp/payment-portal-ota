@@ -33,6 +33,20 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Plus, Search, Download, Pencil, Trash2, Loader as Loader2 } from 'lucide-react';
 import { CLASS_LIST, type Student } from '@/lib/constants';
+
+// Extend Student interface to include neco_fee
+interface StudentWithNECO {
+  id: string;
+  full_name: string;
+  class: string;
+  student_type: 'day' | 'boarding';
+  total_fees: number;
+  hostel_fee: number;
+  neco_fee?: number;
+  total_paid: number;
+  created_at: string;
+  updated_at: string;
+}
 import { formatCurrency } from '@/lib/format';
 import { PaymentStatusBadge } from '@/components/status-badge';
 import { StudentDialog } from '@/components/admin/student-dialog';
@@ -41,18 +55,19 @@ import { toast } from 'sonner';
 
 export default function StudentsPage() {
   const { isSuperAdmin } = useAuth();
-  const [students, setStudents] = useState<Student[]>([]);
+  const [students, setStudents] = useState<StudentWithNECO[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [classFilter, setClassFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingStudent, setEditingStudent] = useState<Student | null>(null);
+  const [editingStudent, setEditingStudent] = useState<StudentWithNECO | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   // Function to get payment status for a student
-  function getPaymentStatus(student: Student): 'fully-paid' | 'partial' | 'outstanding' {
-    const totalFees = Number(student.total_fees) + (student.student_type === 'boarding' && student.hostel_fee ? Number(student.hostel_fee) : 0);
+  function getPaymentStatus(student: StudentWithNECO): 'fully-paid' | 'partial' | 'outstanding' {
+    // total_fees already includes hostel_fee for boarding students
+    const totalFees = Number(student.total_fees);
     const paid = Number(student.total_paid);
     if (paid >= totalFees && totalFees > 0) return 'fully-paid';
     if (paid > 0) return 'partial';
@@ -111,17 +126,30 @@ export default function StudentsPage() {
         { header: 'Full Name', accessor: (r) => r.full_name as string },
         { header: 'Class', accessor: (r) => r.class as string },
         { header: 'Type', accessor: (r) => r.student_type as string },
-        { header: 'Tuition Fee', accessor: (r) => r.total_fees as number },
+        { header: 'Tuition Fee', accessor: (r) => {
+          // Show actual tuition fee (total_fees - hostel_fee - neco_fee for boarding)
+          if (r.student_type === 'boarding' && r.hostel_fee) {
+            const necoFee = Number(r.neco_fee) || 0;
+            return Number(r.total_fees) - (Number(r.hostel_fee) + necoFee);
+          }
+          // For day students, subtract NECO fee if present
+          if (r.neco_fee && r.neco_fee > 0) {
+            return Number(r.total_fees) - Number(r.neco_fee);
+          }
+          return r.total_fees as number;
+        } },
         { header: 'Hostel Fee', accessor: (r) => r.hostel_fee as number },
         { header: 'Total Paid', accessor: (r) => r.total_paid as number },
         { header: 'Balance', accessor: (r) => {
-          const totalFees = (r.total_fees as number) + (r.student_type === 'boarding' && r.hostel_fee ? (r.hostel_fee as number) : 0);
+          // total_fees already includes hostel_fee, no need to add again
+          const totalFees = r.total_fees as number;
           return totalFees - (r.total_paid as number);
         } },
         {
           header: 'Status',
           accessor: (r) => {
-            const totalFees = (r.total_fees as number) + (r.student_type === 'boarding' && r.hostel_fee ? (r.hostel_fee as number) : 0);
+            // total_fees already includes hostel_fee for boarding students
+            const totalFees = r.total_fees as number;
             const paid = r.total_paid as number;
             if (paid >= totalFees && totalFees > 0) return 'Fully Paid';
             if (paid > 0) return 'Partial';
@@ -230,8 +258,12 @@ export default function StudentsPage() {
                 </TableHeader>
                 <TableBody>
                   {students.map((s) => {
-                    const totalFees = Number(s.total_fees) + (s.student_type === 'boarding' && s.hostel_fee ? Number(s.hostel_fee) : 0);
+                    // total_fees already includes hostel_fee for boarding students
+                    const totalFees = Number(s.total_fees);
                     const balance = totalFees - Number(s.total_paid);
+                    const tuitionFee = s.student_type === 'boarding' && s.hostel_fee 
+                      ? totalFees - Number(s.hostel_fee)
+                      : totalFees;
                     return (
                       <TableRow key={s.id} className="hover:bg-muted/30">
                         <TableCell className="font-medium">{s.full_name}</TableCell>
@@ -245,7 +277,7 @@ export default function StudentsPage() {
                             {s.student_type === 'boarding' ? 'Boarding' : 'Day'}
                           </span>
                         </TableCell>
-                        <TableCell className="text-right">{formatCurrency(Number(s.total_fees))}</TableCell>
+                        <TableCell className="text-right">{formatCurrency(tuitionFee)}</TableCell>
                         <TableCell className="text-right text-muted-foreground">
                           {s.student_type === 'boarding' ? formatCurrency(Number(s.hostel_fee)) : '—'}
                         </TableCell>

@@ -14,6 +14,7 @@ import {
   Package,
   Settings,
   RefreshCw,
+  Building2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/components/auth-provider';
@@ -32,6 +33,7 @@ const baseNavItems = [
 ];
 
 const superAdminNavItems = [
+  { href: '/admin/bank-accounts', label: 'Bank Accounts', icon: Building2 },
   { href: '/admin/term-reset', label: 'Term Reset', icon: RefreshCw },
 ];
 

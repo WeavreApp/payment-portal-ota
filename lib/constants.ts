@@ -133,8 +133,11 @@ export interface BankAccount {
   account_number: string;
   accepts_tuition: boolean;
   accepts_misc: boolean;
-  student_level: 'secondary' | 'primary' | 'hostel';
+  student_level: 'all' | 'primary' | 'secondary' | 'hostel';
   display_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface MiscItem {
@@ -153,6 +156,7 @@ export interface Student {
   student_type: 'day' | 'boarding';
   total_fees: number;
   hostel_fee: number;
+  neco_fee: number;
   total_paid: number;
   created_at: string;
   updated_at: string;
@@ -261,9 +265,9 @@ export const CLASS_FEE_RATES: {
   { class: 'SS2A3', display: 'SS2A3', dayFee: 180000, boarderFee: 430000, allowsBoarding: true },
   { class: 'SS2A4', display: 'SS2A4', dayFee: 180000, boarderFee: 430000, allowsBoarding: true },
   { class: 'SS2B/C', display: 'SS2B/C', dayFee: 180000, boarderFee: 430000, allowsBoarding: true },
-  { class: 'SS3A1', display: 'SS3A1', dayFee: 180000, boarderFee: 430000, allowsBoarding: true },
-  { class: 'SS3A2', display: 'SS3A2', dayFee: 180000, boarderFee: 430000, allowsBoarding: true },
-  { class: 'SS3B/C', display: 'SS3B/C', dayFee: 180000, boarderFee: 430000, allowsBoarding: true },
+  { class: 'SS3A1', display: 'SS3A1', dayFee: 180000, boarderFee: 750000, allowsBoarding: true },
+  { class: 'SS3A2', display: 'SS3A2', dayFee: 180000, boarderFee: 750000, allowsBoarding: true },
+  { class: 'SS3B/C', display: 'SS3B/C', dayFee: 180000, boarderFee: 750000, allowsBoarding: true },
 ];
 
 export function getFeeForClass(className: string, isBoarder: boolean = false): { baseFee: number; hostelFee?: number; total: number } {
@@ -295,17 +299,30 @@ export function allowsBoarding(className: string, classFeeRates?: any[]): boolea
   return rate?.allowsBoarding || false;
 }
 
-export function calculateStudentFees(className: string, isBoarder: boolean = false, hostelFee: number = 250000): { baseTuition: number; hostelFee: number; totalFees: number } {
+// NECO fee settings
+export const NECO_FEE = 40000; // ₦40,000 for NECO exam fee
+
+export function calculateStudentFees(
+  className: string, 
+  isBoarder: boolean = false, 
+  hostelFee: number = 250000,
+  includeNECO: boolean = false
+): { baseTuition: number; hostelFee: number; necoFee: number; totalFees: number } {
   const fees = getFeeForClass(className, isBoarder);
   
   // Calculate hostel fee only if student is boarder and class allows boarding
   const actualHostelFee = (isBoarder && allowsBoarding(className)) ? hostelFee : 0;
   
-  const totalFees = fees.baseFee + actualHostelFee;
+  // Add NECO fee only if specified and student is in SS3
+  const isSS3 = className.includes('SS3');
+  const necoFee = includeNECO && isSS3 ? NECO_FEE : 0;
+  
+  const totalFees = fees.baseFee + actualHostelFee + necoFee;
   
   return {
     baseTuition: fees.baseFee,
     hostelFee: actualHostelFee,
+    necoFee,
     totalFees
   };
 }

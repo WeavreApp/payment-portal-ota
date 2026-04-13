@@ -181,7 +181,7 @@ export default function FeeSettingsPage() {
 
         if (classRates) {
           let updatedCount = 0;
-          const BATCH_SIZE = 50;
+          const BATCH_SIZE = 200;
 
           for (let i = 0; i < students.length; i += BATCH_SIZE) {
             const batch = students.slice(i, i + BATCH_SIZE);
@@ -254,7 +254,7 @@ export default function FeeSettingsPage() {
 
         if (classRates) {
           let updatedCount = 0;
-          const BATCH_SIZE = 50;
+          const BATCH_SIZE = 200;
 
           for (let i = 0; i < students.length; i += BATCH_SIZE) {
             const batch = students.slice(i, i + BATCH_SIZE);
@@ -377,7 +377,7 @@ export default function FeeSettingsPage() {
     }
 
     let updatedCount = 0;
-    const BATCH_SIZE = 50;
+    const BATCH_SIZE = 200;
 
     for (let i = 0; i < students.length; i += BATCH_SIZE) {
       const batch = students.slice(i, i + BATCH_SIZE);
@@ -420,7 +420,7 @@ export default function FeeSettingsPage() {
 
     setMassUpdating(true);
     let updatedCount = 0;
-    const BATCH_SIZE = 50; // Update 50 students at a time in parallel
+    const BATCH_SIZE = 200; // Update 50 students at a time in parallel
 
     try {
       for (const [className, fees] of Object.entries(editingRates)) {

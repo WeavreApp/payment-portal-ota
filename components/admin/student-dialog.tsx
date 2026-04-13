@@ -41,6 +41,7 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
   const [classFeeRates, setClassFeeRates] = useState<any[]>([]);
   const [globalHostelFee, setGlobalHostelFee] = useState(250000);
   const [ss3HostelFee, setSS3HostelFee] = useState(750000);
+  const [manualFeeOverride, setManualFeeOverride] = useState(false);
 
   // Load current fee rates from database
   useEffect(() => {
@@ -90,13 +91,13 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
     }
   }, [open]);
 
-  // Auto-calculate fees when class or student type changes
+  // Auto-calculate fees when class or student type changes (only if not manually overridden)
   useEffect(() => {
-    if (studentClass && studentType && classFeeRates.length > 0) {
+    if (studentClass && studentType && classFeeRates.length > 0 && !manualFeeOverride) {
       try {
         // Find the fee rate for this specific class from database
         const classRate = classFeeRates.find(rate => rate.class_name === studentClass);
-        
+
         if (!classRate) {
           console.error(`No fee rate found for class: ${studentClass}`);
           setAutoCalculatedFees(null);
@@ -105,7 +106,7 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
 
         // Calculate base tuition - always use day student fee
         const baseTuition = classRate.day_student_fee;
-        
+
         // Calculate hostel fee only if student is boarder and class allows boarding
         let actualHostelFee = 0;
         if (studentType === 'boarding' && classRate.allows_boarding) {
@@ -116,22 +117,22 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
             actualHostelFee = globalHostelFee; // Use global fee for other classes
           }
         }
-        
+
         // Add NECO fee only if student is in SS3 and NECO is included
         const isSS3 = studentClass.includes('SS3');
         const necoFee = includeNECO && isSS3 ? NECO_FEE : 0;
-        
+
         // Total fees = day fee + hostel fee (if boarding) + NECO fee (if SS3)
         const totalFees = baseTuition + actualHostelFee + necoFee;
-        
+
         setAutoCalculatedFees({
           tuition: baseTuition,
           hostel: actualHostelFee,
           necoFee,
           total: totalFees
         });
-        
-        // Auto-fill form fields with calculated fees
+
+        // Auto-fill form fields with calculated fees (only if not manually edited)
         setTotalFees(String(baseTuition + necoFee));
         if (studentType === 'boarding') {
           setHostelFee(String(actualHostelFee));
@@ -145,7 +146,18 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
     } else {
       setAutoCalculatedFees(null);
     }
-  }, [studentClass, studentType, classFeeRates, globalHostelFee, includeNECO]);
+  }, [studentClass, studentType, classFeeRates, globalHostelFee, includeNECO, manualFeeOverride]);
+
+  // Detect manual fee edits
+  const handleTuitionChange = (value: string) => {
+    setTotalFees(value);
+    setManualFeeOverride(true);
+  };
+
+  const handleHostelChange = (value: string) => {
+    setHostelFee(value);
+    setManualFeeOverride(true);
+  };
 
   useEffect(() => {
     if (student) {
@@ -157,6 +169,8 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
       // Set NECO checkbox based on whether student has NECO fee
       const isSS3 = student.class.includes('SS3');
       setIncludeNECO(isSS3 && (student.neco_fee || 0) > 0);
+      // Reset manual override flag when opening dialog
+      setManualFeeOverride(false);
     } else {
       setFullName('');
       setStudentClass('');
@@ -164,6 +178,7 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
       setTotalFees('');
       setHostelFee('');
       setIncludeNECO(false);
+      setManualFeeOverride(false);
     }
   }, [student, open]);
 
@@ -174,45 +189,36 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
     // Calculate NECO fee
     const isSS3 = studentClass.includes('SS3');
     const necoFeeAmount = includeNECO && isSS3 ? NECO_FEE : 0;
-    
-    // DEBUG: Log the calculation
-    console.log('DEBUG handleSubmit:', {
-      studentClass,
-      isSS3,
-      includeNECO,
-      necoFeeAmount,
-      NECO_FEE,
-      autoCalculatedFees
-    });
-    
-    // Always use calculated values from autoCalculatedFees
-    // If autoCalculatedFees is null, recalculate manually
+
+    // Use manual values if user edited fees, otherwise use auto-calculated
     let baseTuition: number;
     let actualHostelFee: number;
-    
-    if (autoCalculatedFees) {
-      baseTuition = autoCalculatedFees.tuition;
-      actualHostelFee = autoCalculatedFees.hostel;
+
+    if (manualFeeOverride) {
+      // Use the values from the form inputs
+      baseTuition = parseFloat(totalFees) || 0;
+      actualHostelFee = studentType === 'boarding' ? (parseFloat(hostelFee) || 0) : 0;
     } else {
-      // Manual calculation as fallback
-      const classRate = classFeeRates.find(rate => rate.class_name === studentClass);
-      baseTuition = classRate ? classRate.day_student_fee : 645000;
-      
-      if (studentType === 'boarding' && classRate?.allows_boarding) {
-        actualHostelFee = studentClass.includes('SS3') ? ss3HostelFee : globalHostelFee;
+      // Use calculated values from autoCalculatedFees
+      // If autoCalculatedFees is null, recalculate manually
+      if (autoCalculatedFees) {
+        baseTuition = autoCalculatedFees.tuition;
+        actualHostelFee = autoCalculatedFees.hostel;
       } else {
-        actualHostelFee = 0;
+        // Manual calculation as fallback
+        const classRate = classFeeRates.find(rate => rate.class_name === studentClass);
+        baseTuition = classRate ? classRate.day_student_fee : 645000;
+
+        if (studentType === 'boarding' && classRate?.allows_boarding) {
+          actualHostelFee = studentClass.includes('SS3') ? ss3HostelFee : globalHostelFee;
+        } else {
+          actualHostelFee = 0;
+        }
       }
     }
-    
+
     const calculatedTotal = baseTuition + actualHostelFee + necoFeeAmount;
-    console.log('DEBUG payload:', {
-      baseTuition,
-      actualHostelFee,
-      necoFeeAmount,
-      calculatedTotal
-    });
-    
+
     const payload = {
       full_name: fullName.trim(),
       class: studentClass,
@@ -320,12 +326,17 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
               step="0.01"
               placeholder="e.g. 150000"
               value={totalFees}
-              onChange={(e) => setTotalFees(e.target.value)}
+              onChange={(e) => handleTuitionChange(e.target.value)}
               required
             />
-            {autoCalculatedFees && (
+            {autoCalculatedFees && !manualFeeOverride && (
               <p className="text-xs text-green-600">
                 Auto-calculated: ₦{autoCalculatedFees.tuition.toLocaleString()} tuition{autoCalculatedFees.necoFee > 0 ? ` + ₦${autoCalculatedFees.necoFee.toLocaleString()} NECO` : ''} for {studentClass}
+              </p>
+            )}
+            {manualFeeOverride && (
+              <p className="text-xs text-orange-600">
+                Manual override - using custom fee
               </p>
             )}
           </div>
@@ -339,11 +350,16 @@ export function StudentDialog({ open, onClose, onSaved, student }: StudentDialog
                 step="0.01"
                 placeholder="e.g. 80000"
                 value={hostelFee}
-                onChange={(e) => setHostelFee(e.target.value)}
+                onChange={(e) => handleHostelChange(e.target.value)}
               />
-              {autoCalculatedFees && autoCalculatedFees.hostel > 0 && (
+              {autoCalculatedFees && autoCalculatedFees.hostel > 0 && !manualFeeOverride && (
                 <p className="text-xs text-green-600">
                   Auto-calculated: ₦{autoCalculatedFees.hostel.toLocaleString()} for boarding{studentClass.includes('SS3') ? ' (SS3 rate)' : ''}
+                </p>
+              )}
+              {manualFeeOverride && (
+                <p className="text-xs text-orange-600">
+                  Manual override - using custom fee
                 </p>
               )}
               <p className="text-xs text-muted-foreground">

@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "add-students": "node scripts/add-students.js",
     "setup-database": "node scripts/setup-database.js",
-    "seed-database": "node scripts/seed-database.js"
+    "seed-database": "node scripts/seed-database.js",
+    "setup": "node scripts/setup.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

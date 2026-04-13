@@ -258,13 +258,13 @@ export default function FeeSettingsPage() {
       return;
     }
 
-    // Then update all students in this class (only those without manual overrides)
+    // Then update ALL students in this class (including those with manual overrides)
     const globalHostel = parseFloat(globalHostelFee) || 250000;
     const ss3Hostel = parseFloat(ss3HostelFee) || 750000;
 
     const { data: students, error: fetchError } = await supabase
       .from('students')
-      .select('id, student_type, neco_fee, total_fees, hostel_fee')
+      .select('id, student_type, neco_fee')
       .eq('class', className);
 
     if (fetchError || !students) {
@@ -273,7 +273,6 @@ export default function FeeSettingsPage() {
     }
 
     let updatedCount = 0;
-    let skippedCount = 0;
     const BATCH_SIZE = 50;
 
     for (let i = 0; i < students.length; i += BATCH_SIZE) {
@@ -289,24 +288,6 @@ export default function FeeSettingsPage() {
           ? (isSS3 ? ss3Hostel : globalHostel)
           : 0;
         const newTotalFee = newDayFee + actualHostelFee + necoFee;
-
-        // Calculate what the OLD default fees should have been
-        const oldDayFee = classRate.day_student_fee;
-        const oldHostelFee = isBoarding
-          ? (isSS3 ? ss3Hostel : globalHostel)
-          : 0;
-        const oldExpectedTotal = oldDayFee + oldHostelFee + necoFee;
-
-        // Check if student has manual override (current fees don't match old defaults)
-        const hasManualOverride =
-          Math.abs(student.total_fees - oldExpectedTotal) > 0.01 ||
-          (isBoarding && Math.abs((student.hostel_fee || 0) - oldHostelFee) > 0.01);
-
-        // Skip students with manual overrides
-        if (hasManualOverride) {
-          skippedCount++;
-          return Promise.resolve({ error: null }); // Skip update
-        }
 
         return supabase
           .from('students')
@@ -324,21 +305,17 @@ export default function FeeSettingsPage() {
       });
     }
 
-    const message = skippedCount > 0
-      ? `Updated ${className}: ${updatedCount} students updated, ${skippedCount} skipped (manual overrides)`
-      : `Updated ${className}: ${updatedCount} students updated`;
-    toast.success(message);
+    toast.success(`Updated ${className}: ${updatedCount} students updated`);
     await loadFeeSettings();
   }
 
   async function massUpdateStudents() {
-    if (!confirm('This will update ALL existing students to match the new class fees. Students with manual fee overrides will be skipped. Continue?')) {
+    if (!confirm('This will update ALL existing students to match the new class fees. Continue?')) {
       return;
     }
 
     setMassUpdating(true);
     let updatedCount = 0;
-    let skippedCount = 0;
     const BATCH_SIZE = 50; // Update 50 students at a time in parallel
 
     try {
@@ -352,10 +329,10 @@ export default function FeeSettingsPage() {
         const globalHostel = parseFloat(globalHostelFee) || 250000;
         const ss3Hostel = parseFloat(ss3HostelFee) || 750000;
 
-        // Get all students in this class with their current fees
+        // Get all students in this class
         const { data: students, error: fetchError } = await supabase
           .from('students')
-          .select('id, student_type, neco_fee, total_fees, hostel_fee')
+          .select('id, student_type, neco_fee')
           .eq('class', className);
 
         if (fetchError || !students) {
@@ -379,24 +356,6 @@ export default function FeeSettingsPage() {
               : 0;
             const newTotalFee = newDayFee + actualHostelFee + necoFee;
 
-            // Calculate what the OLD default fees should have been
-            const oldDayFee = classRate.day_student_fee;
-            const oldHostelFee = isBoarding
-              ? (isSS3 ? ss3Hostel : globalHostel)
-              : 0;
-            const oldExpectedTotal = oldDayFee + oldHostelFee + necoFee;
-
-            // Check if student has manual override (current fees don't match old defaults)
-            const hasManualOverride =
-              Math.abs(student.total_fees - oldExpectedTotal) > 0.01 ||
-              (isBoarding && Math.abs((student.hostel_fee || 0) - oldHostelFee) > 0.01);
-
-            // Skip students with manual overrides
-            if (hasManualOverride) {
-              skippedCount++;
-              return Promise.resolve({ error: null }); // Skip update
-            }
-
             return supabase
               .from('students')
               .update({
@@ -416,10 +375,7 @@ export default function FeeSettingsPage() {
         }
       }
 
-      const message = skippedCount > 0
-        ? `Updated ${updatedCount} students with new fee rates, ${skippedCount} skipped (manual overrides)`
-        : `Updated ${updatedCount} students with new fee rates`;
-      toast.success(message);
+      toast.success(`Updated ${updatedCount} students with new fee rates`);
     } catch (error: any) {
       toast.error('Failed to mass update students');
       console.error('Mass update error:', error);

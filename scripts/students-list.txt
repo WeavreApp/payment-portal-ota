@@ -1,0 +1,956 @@
+Owonikoko Hibatullahi,Toddler,Day
+Sanusi Haizah,Toddler,Day
+Bankole Sumayyah,Toddler,Day
+Ofoke Richard,Toddler,Day
+Ofoke Winfred,Toddler,Day
+Godo Faizah,Toddler,Day
+Shomoye AbdulSalam,Toddler,Day
+Obadofin Ayomikun,Toddler,Day
+Sanusi Rhoeos,Toddler,Day
+Moronkola Simbiat,Toddler,Day
+Adenekan Deborah,Toddler,Day
+Bello Abdulraheem,Toddler,Day
+Ogunwoolu Jamal,Toddler,Day
+Masiru Oluwatiresimi,Toddler,Day
+Salaudeen Jomiloju,Toddler,Day
+Bamiseti Kulqeet,Toddler,Day
+Nwofoke Chiamaka,Toddler,Day
+Olangan Majeedah,Toddler,Day
+Sherifdeen Rahmatullahi,Toddler,Day
+Akawande Iremide,Toddler,Day
+Olatunbosun Peace,Toddler,Day
+Pious Peculiar,Toddler,Day
+Falade Fareed,Pre-Schooler,Day
+Olatunbosun Praise,Pre-Schooler,Day
+Olatunde Ayomikun,Pre-Schooler,Day
+Adeyinka Muhammed,Pre-Schooler,Day
+Ojo Micheal,Pre-Schooler,Day
+Adigun Abdulrahman,Pre-Schooler,Day
+Orisadare Imran,Pre-Schooler,Day
+Oyalowo Zinatullah,Pre-Schooler,Day
+Ajayi Oluwatofunmi,Pre-Schooler,Day
+Adekunle Quyyum,Pre-Schooler,Day
+Ayoade Farhanah,Pre-Schooler,Day
+Ibrahim-Ismail Abdulhammed,Pre-Schooler,Day
+Ofoke Ndubuisi,Pre-Schooler,Day
+Ogunjobi Abdulmalik,Pre-Schooler,Day
+Oladejo Farida,Pre-Schooler,Day
+Olanrewaju Aisha,Pre-Schooler,Day
+Nurudeen Abdulsobur,Pre-Schooler,Day
+Rasaq Zaeem,Pre-Schooler,Day
+Salami Aleem,Pre-Schooler,Day
+Salami Mearab,Pre-Schooler,Day
+Temidayo Ayomiposi,Pre-Schooler,Day
+Olanijan Fatiha,Pre-Schooler,Day
+Adebayo Mutisoliu,Nursery,Day
+Adeladan Oluwafemi,Nursery,Day
+Adeniji Mahmudah,Nursery,Day
+Aguda Joanah,Nursery,Day
+Ahmad Rahmat,Nursery,Day
+Amusan Iremide,Nursery,Day
+Dairo Dayyan,Nursery,Day
+Shittu Azim,Nursery,Day
+Kolapo (S) Zainab,Nursery,Day
+Muhideen Abdulrahman,Nursery,Day
+Ogunyemi Kyla,Nursery,Day
+Popoola Kehinde,Nursery,Day
+Popoola Taiwo,Nursery,Day
+Balogun Atinah,Nursery,Day
+Shasanmi Olaita,Nursery,Day
+Ofoke Success,Nursery,Day
+Agboola (S) Jamal,Nursery,Day
+Tibowei Wisdom. A,Nursery,Day
+Emeka Daniel,Nursery,Day
+Aliyu Uthman,Nursery,Day
+Adeniji Abdulrahman,Nursery,Day
+Olanrewaju Abdul Rahman,Nursery,Day
+Adelalu Abdullahi,Nursery,Day
+Sherifdeen Aimotullahi,Nursery,Day
+Adewilu Iman,Nursery,Day
+Owoseni Micheal,Nursery,Day
+Adegbulugbe Precious,Nursery,Day
+Martins Benjamin,Nursery,Day
+Adelalu Faizat,Pry 1A,Day
+Egunfemi Darita,Pry 1A,Day
+Tijani Mardiyah,Pry 1A,Day
+Omojola-Olufemi-Elizabeth,Pry 1A,Day
+Balogun Adam,Pry 1A,Day
+Adeleye Muslim,Pry 1A,Day
+Adenekan Samuel,Pry 1A,Boarder
+Ofoke Prince,Pry 1A,Day
+Olaniyan Aishat,Pry 1A,Day
+Oyetayo Emmanuel,Pry 1A,Day
+Ofoke Kingsley,Pry 1A,Day
+Atunde Salamah,Pry 1A,Day
+Yusuf Faaiz,Pry 1A,Day
+Adeyemo Ali-Aimon,Pry 1A,Day
+Odunsanya Aqilah,Pry 1B,Boarder
+Sherifdeen Hibatullahi,Pry 1B,Day
+Oladele El-Roi,Pry 1B,Day
+Olaniyan Fateen,Pry 1B,Day
+Ibrahim-Ismail-Khalid,Pry 1B,Day
+Piamo Sofiat,Pry 1B,Day
+Fakunle Isreal,Pry 1B,Day
+Ramoni Afeeyah,Pry 1B,Day
+Godo Faidh,Pry 1B,Day
+Yusuff Abdulsamad,Pry 1B,Day
+Durowoju Yusuff,Pry 1B,Day
+Bakrin Aliyah,Pry 1B,Day
+Igbinedion Daniel,Pry 1B,Day
+Oluwadare (S) Gold,Pry 1B,Day
+Adigun Rayhanna,Pry 2A,Day
+Bankole Suad,Pry 2A,Day
+Adeyinka Aishat,Pry 2A,Day
+Babawale Darasimi,Pry 2A,Day
+Salaudeen Amir,Pry 2A,Day
+Abiola Khosiah,Pry 2A,Day
+Popoola Moimot,Pry 2A,Day
+Bello AbduHafeez,Pry 2A,Day
+Olatunde Samuel,Pry 2A,Day
+Ayanda Victoria,Pry 2A,Day
+Jones-David-Abayomi,Pry 2A,Day
+Adegbola (S) AbdTawwab,Pry 2A,Day
+Taiwo Nimetallahi,Pry 2A,Day
+Adewale Esther,Pry 2A,Day
+Orisadare Akram,Pry 2A,Day
+Akanbi Mustapha,Pry 2A,Day
+Olanrewaju Azeemah,Pry 2A,Day
+Adeyemo Mordiyah,Pry 2B,Day
+Adegbenjo Dominion,Pry 2B,Day
+Adeleke Aisha,Pry 2B,Day
+Agoro Muhammed,Pry 2B,Day
+Muhammed Ridwan,Pry 2B,Day
+Salaudeen Mariam,Pry 2B,Day
+Balogun Folajomi,Pry 2B,Day
+Eguevon Chioma,Pry 2B,Day
+Ismail-Ibrahim Khadijah,Pry 2B,Day
+Moronkola Jamaldeen,Pry 2B,Day
+Nurudeen Abdulwarith,Pry 2B,Day
+Ojelade Kofoworola,Pry 2B,Day
+Rasaq Zeenat,Pry 2B,Day
+Adedeji Balqees,Pry 2B,Day
+Temidayo Folashayo,Pry 2B,Day
+Bamisesi Muqtadir,Pry 2B,Day
+Owoseni John,Pry 2B,Day
+Lateef Atiyah,Pry 2B,Day
+Adekunle Hasnaau,Pry 3A,Day
+Aguda Judith,Pry 3A,Day
+Aina Morzug,Pry 3A,Day
+Adeniji Zulfah,Pry 3A,Day
+Bakare Adnan,Pry 3A,Day
+Bamidele Adnan,Pry 3A,Day
+Bankole Royalty,Pry 3A,Day
+Dawud Hassanah,Pry 3A,Day
+Dokunmu Uyimiposi,Pry 3A,Day
+Lemo Olakitan,Pry 3A,Day
+Makinde Mubashir,Pry 3A,Day
+Amidu Sultan,Pry 3A,Day
+Joseph Joshua,Pry 3A,Day
+Owonikoko Abdulrahman,Pry 3A,Day
+Oyalowo Murthadar,Pry 3A,Day
+Raheem Khalid,Pry 3A,Day
+Shomoye Abdulazeez,Pry 3A,Day
+Bello Ruth,Pry 3A,Day
+Ofoke Amarachi,Pry 3A,Day
+Ojo David,Pry 3A,Day
+Akinlabi Abd' Baseet,Pry 3B,Day
+Adeyemo Zion,Pry 3B,Day
+Awwal Fareedah,Pry 3B,Day
+Tijani Mubarak,Pry 3B,Day
+Salami Mahmud,Pry 3B,Day
+Aliyu Umar,Pry 3B,Day
+Sanusi Faruoq,Pry 3B,Day
+Akorede Aisha,Pry 3B,Day
+Muhideen Aliyah,Pry 3B,Day
+Deinde Barakat,Pry 3B,Day
+Adeyinka Abdullah,Pry 3B,Day
+Samuel Oluwatosin,Pry 3B,Day
+Harun Aliyah,Pry 3B,Day
+Salaudeen Samad,Pry 3B,Day
+Yusuf Mustapha,Pry 3B,Day
+Ogunseye Mahmud,Pry 3B,Day
+Sajimi Fayojimi,Pry 3B,Day
+Olabisi Muaz,Pry 3B,Day
+Adenekan Emmanuel,Pry 3B,Day
+Nzeruo Annabel,Pry 3B,Day
+Oyebowale Enoch,Pry 3B,Day
+Odusanya Awwal,Pry 3B,Boarder
+Bello Ayomide,Pry 3B,Day
+Nwofoke Chizaram,Pry 3B,Day
+Adeoye Adebowale,Pry 3B,Day
+Adebayo Hussainat,Pry 4A,Day
+Ahmad Zainab,Pry 4A,Day
+Akinjobi Muslimah,Pry 4A,Day
+Aremu Hikmat,Pry 4A,Day
+Babalola Susan,Pry 4A,Day
+Baiyewu Emmanuel,Pry 4A,Day
+Bakrin Aleem,Pry 4A,Day
+Dehinola Adesewa,Pry 4A,Day
+Falade Fareedah,Pry 4A,Day
+Kusanu Khalid,Pry 4A,Day
+Osanyinbi Olakunle,Pry 4A,Day
+Shittu Hannah,Pry 4A,Day
+Temidayo Ayomikun,Pry 4A,Day
+Amusa Aishat,Pry 4A,Day
+Balogun Alim,Pry 4A,Day
+Adeniji Mariam,Pry 4A,Day
+Fagbenro Abd'Rahmam,Pry 4A,Day
+Idowu Awwad,Pry 4A,Day
+Idowu Aliyah,Pry 4A,Boarder
+Odogun Zion,Pry 4A,Day
+Omojola-Olufemi Joseph,Pry 4A,Day
+Salami Fareedah,Pry 4A,Day
+Salami Su'ud,Pry 4A,Day
+Emeka Beulah,Pry 4A,Day
+Martins Elizabeth,Pry 4A,Day
+Abalagada Darasimi,Pry 5A,Day
+Akinde Al-meen,Pry 5A,Day
+Adeladan Feranmi,Pry 5A,Day
+Adewale Solomon,Pry 5A,Day
+Aguda Samuel,Pry 5A,Day
+Akinsola Temiloluwa,Pry 5A,Day
+Alabi Irelabi,Pry 5A,Day
+Aloba Ali,Pry 5A,Day
+Amusa Sammiah,Pry 5A,Day
+Dawud Hassan,Pry 5A,Day
+Esin Ibrahim,Pry 5A,Day
+Momodu Mubarak,Pry 5A,Day
+Odejobi Aliyah,Pry 5A,Day
+Ofoke Favour,Pry 5A,Day
+Lateef Aisha,Pry 5A,Day
+Olatunde Promise,Pry 5A,Day
+Olufuwape Daniel,Pry 5A,Day
+Omojola-Olufemi Precious,Pry 5A,Day
+Onwubiko Anne,Pry 5A,Day
+Orisadare Hazeemah,Pry 5A,Day
+Owolabi Fareedah,Pry 5A,Day
+Saka Sobur,Pry 5A,Day
+Sangobiyi Israel,Pry 5A,Day
+Sanusi Rhofeedah,Pry 5A,Day
+Thomas Justina,Pry 5A,Boarder
+Yusuf Imran,Pry 5A,Day
+Adeniji Temitope,Pry 5B,Day
+Adegboye Cyrus,Pry 5B,Day
+Adebayo Dayyan,Pry 5B,Day
+Omoyungbo Sekemi,Pry 5B,Day
+Bamigbola Haneefah,Pry 5B,Boarder
+Atata Sururoh,Pry 5B,Day
+Aladeyelu Darasimi,Pry 5B,Day
+Ajibade Istijabah,Pry 5B,Day
+Oyekola Rihannat,Pry 5B,Boarder
+Ójó Esther,Pry 5B,Day
+Tanimola Jezeerat,Pry 5B,Day
+Oladejo Oluwadamola,Pry 5B,Day
+Onwubiko Vivienne,Pry 5B,Day
+Akorede Mubarak,Pry 5B,Day
+Abanikanda Faqeeha,Pry 5B,Day
+Ajayi Deborah,Pry 5B,Day
+Agbabiaka Yusroh,Pry 5B,Day
+Alabi Nazeeb,Pry 5B,Day
+Ulomachukwu Chigbundu,Pry 5B,Day
+Adekunle Suzzinat,Pry 5B,Day
+Ajayi Anjola,Pry 5B,Day
+Ohajuru Favour,Pry 5B,Day
+Alabi Waheeb,Pry 5B,Day
+Nzeruo Ifeyinwa,Pry 5B,Day
+Olaniyi Grace,Pry 5B,Day
+Agboba Imisioluwa,JSS1A,Boarder
+Ahmad Imran,JSS1A,Day
+Aina Ibrahim,JSS1A,Day
+Aina Maryam,JSS1A,Day
+Alimi Khalid,JSS1A,Day
+ALLi Jeremiah,JSS1A,Day
+Akinremi Gold,JSS1A,Day
+Amidu Yunus,JSS1A,Day
+Aremu muhammed,JSS1A,Day
+Atatalutfullah,JSS1A,Day
+Ayoade Maryam,JSS1A,Day
+Balogun Adesewa,JSS1A,Boarder
+Bolaji awwal,JSS1A,Day
+Ederi Samuel,JSS1A,Boarder
+Efundowo Livingscript,JSS1A,Day
+Folorunsho Abdulhaleem,JSS1A,Boarder
+Hamzat Ibraheem,JSS1A,Day
+Idris Mutmainah,JSS1A,Boarder
+Ishola Jameelah,JSS1A,Day
+Ogunjobi Aamilah,JSS1A,Day
+Ojelade Muhammad,JSS1A,Boarder
+Okechukwu Ebere,JSS1A,Day
+Oladimeji Taqiyah,JSS1A,Day
+Omogbai Emmanuella,JSS1A,Day
+Omotayo Simiat,JSS1A,Day
+Oyi Favour,JSS1A,Day
+Quadri Ridwanulahi,JSS1A,Day
+Soliu Ibraheem,JSS1A,Day
+Taiwo Abdulaleem,JSS1A,Day
+Taiwo Fareedah,JSS1A,Day
+Adeniyi Joel,JSS1B,Day
+Alabi Openipo,JSS1B,Boarder
+Amolegbe Salam,JSS1B,Day
+Amuziem Chiclubem,JSS1B,Day
+Asombe Faruq,JSS1B,Boarder
+Bakare Hamidat,JSS1B,Boarder
+Bakinson Rihanat,JSS1B,Boarder
+Banjoko Ifejesu,JSS1B,Day
+Bamisile Dicleola,JSS1B,Day
+Emeka Kamsi,JSS1B,Day
+Femi John,JSS1B,Day
+Ilori Esther,JSS1B,Day
+Jayeoba Jeffery,JSS1B,Boarder
+Kasali Kofoworola,JSS1B,Day
+Muhammed Mordiyah,JSS1B,Day
+Ogbezode Mataniah,JSS1B,Day
+Ogundairo Fareedlah,JSS1B,Day
+Okhue Ibhade,JSS1B,Day
+Okunowo Christianah,JSS1B,Day
+Olushola AL-ameen,JSS1B,Boarder
+Rasheed Ameerah,JSS1B,Day
+Rufai Azeem,JSS1B,Day
+Shasanmi Gideon,JSS1B,Day
+Shogbola Damilola,JSS1B,Day
+Adeniran Oluwafikayomi,JSS1C,Day
+Aderibigbe Darasimi,JSS1C,Day
+Adisa Aishat,JSS1C,Day
+Ajibola Al-ameen,JSS1C,Boarder
+Arigbede Sharon,JSS1C,Day
+Atitebi,JSS1C,Day
+Badmus Faheem,JSS1C,Day
+Edoro Davina,JSS1C,Day
+Hamzat Rihannat,JSS1C,Day
+Kelani Lateef,JSS1C,Day
+Kolawole Daniel,JSS1C,Day
+Majoyeogbe Awwal,JSS1C,Day
+Misbaudeen Maryam,JSS1C,Day
+Mushafau Basheer,JSS1C,Day
+Ogundare Moyinoluwa,JSS1C,Day
+Okunsaga Olamilekan,JSS1C,Day
+Olarenwajn Nasif,JSS1C,Day
+Olanrewaju Oreoluwa,JSS1C,Day
+Oretuga Modupe,JSS1C,Day
+Rufai Anjorin,JSS1C,Day
+Salami Rahma,JSS1C,Day
+Sheriffden Azimah,JSS1C,Day
+Abdulsalam Al-ameen,JSS1D,Day
+Adewusi Muiz,JSS1D,Day
+Ajayi Femi,JSS1D,Day
+Amusan Olamide,JSS1D,Day
+Ayorinde Abdulmalik,JSS1D,Day
+Hassan Ilyad,JSS1D,Day
+Jimoh Jamal,JSS1D,Boarder
+Lawal Daniel,JSS1D,Day
+Lawal Samuel,JSS1D,Day
+Oluwatayo May,JSS1D,Day
+Oseni Ibrahim,JSS1D,Boarder
+Peter Chisom,JSS1D,Day
+Rita Chisom,JSS1D,Day
+Sulaiman Abdullah,JSS1D,Day
+Tijani Zeenah,JSS1D,Day
+Moshood Ibrahim,JSS1D,Day
+Oladele Elnas,JSS1D,Day
+Oyebade Oluwademilade,JSS1D,Boarder
+Tijani Aamir,JSS1D,Day
+Ezenwanne Chibife,JSS1D,Boarder
+Abdurrauf Abdussalam,JSS2A,Day
+Adebiyi Zainab,JSS2A,Boarder
+Adewole Tahirah,JSS2A,Day
+Adewole Tiwatope,JSS2A,Day
+Adeyemo Anuoluwatofunmi,JSS2A,Day
+Ajbode Nasırudeen,JSS2A,Boarder
+Akintola Hassan,JSS2A,Day
+Aremu Azeemah,JSS2A,Day
+Aremu Azeezah D.,JSS2A,Day
+Asimi Mubarak,JSS2A,Day
+Atiba Treasure,JSS2A,Day
+Atoyebi Ramlah,JSS2A,Boarder
+Awojide Oluwasomi,JSS2A,Day
+Ayanfunso Oluwajuwonlo,JSS2A,Day
+Azeez Abdulmalik,JSS2A,Boarder
+Babawale Ifeoluwa,JSS2A,Day
+Bamidele Oluwagbernisob,JSS2A,Day
+Haruna Fawaz,JSS2A,Day
+Jones-Abayomi Fikayomi,JSS2A,Day
+Kareem Aasiyah,JSS2A,Day
+King Khadeejah,JSS2A,Day
+Lateef Abdul Malik,JSS2A,Day
+Lawal Emmanuella,JSS2A,Day
+Odunsanya AbdulAzeem,JSS2A,Boarder
+Bankole Faizah,JSS2A,Day
+Olagunju Surprise,JSS2A,Day
+Owoseni Ololade,JSS2A,Day
+oyebowale Jitilope,JSS2A,Day
+Oyedeji Mariam,JSS2A,Boarder
+Oyelaja Ahmad,JSS2A,Boarder
+Roland Samantha,JSS2A,Day
+Salawu Habeed,JSS2A,Day
+Sanni Faizah,JSS2A,Day
+Shobo David,JSS2A,Day
+Shobogun Olasubomi,JSS2A,Day
+Yusuf Roqeebah,JSS2A,Day
+ABASS AYOMIDE,JSS2B,Day
+ABDUL AZEEZ,JSS2B,Day
+ABIOLA ASHROF,JSS2B,Day
+ADNIJI ABDULMALIK,JSS2B,Day
+ADENUGBA HABEEBAH,JSS2B,Day
+ADEYEMI PELLUMMI,JSS2B,Boarder
+ATIBADE FARUQ,JSS2B,Day
+AKINSEHINDE MARTINS,JSS2B,Day
+ANEBI AKOREDE,JSS2B,Day
+BANKOLE GIDEON,JSS2B,Day
+BANKOLE SULTAN,JSS2B,Day
+CHUKWUMA FERNANDO,JSS2B,Day
+FAGBENRO FAREEDAH,JSS2B,Boarder
+FASHINA SUBOMI,JSS2B,Day
+GBADAMOSI WURADLA,JSS2B,Day
+IFEBANJO IBUKUN,JSS2B,Day
+1SIAKA KHADEEJAH,JSS2B,Day
+KALUKUDLA MOFEOLUMA,JSS2B,Day
+KOLAWOLE ABDULSAMAD,JSS2B,Day
+MICHEAL CHUKWUFIM,JSS2B,Day
+OGUNDAIRO RODIAH,JSS2B,Day
+OGUINFOWDRA ASMAH,JSS2B,Boarder
+OKUNADE MORDIYAH,JSS2B,Day
+OLABISI Muiz,JSS2B,Day
+OLATUNDUM HERITAGE,JSS2B,Boarder
+ONUIGBO PASCAL,JSS2B,Day
+OSHINGBADE IYINOLUWA,JSS2B,Day
+OYEWOLE OLUWASHI KEMI,JSS2B,Day
+RASHEED ABDULWARIS,JSS2B,Day
+SHEKONI MICHEAL,JSS2B,Day
+SHITTA AWWAL,JSS2B,Day
+SHOBOGUN FAIZAH,JSS2B,Day
+TIJANI TAHIRAH,JSS2B,Boarder
+UBIJI AMARACHI,JSS2B,Day
+UGWUEZE MARY,JSS2B,Day
+WILLIAMS AL-AMEEN,JSS2B,Day
+Abalagada Iremide,JSS2C,Day
+Adebayo Derick,JSS2C,Day
+Adewale Samuel,JSS2C,Day
+Ajala Sultan,JSS2C,Boarder
+Ajibola Precious,JSS2C,Day
+Akanbi mubarak,JSS2C,Day
+AkanbiZeenot,JSS2C,Boarder
+Areabesola hameedat,JSS2C,Day
+Aremu faridat,JSS2C,Day
+Ayanda isaac,JSS2C,Day
+Banmeke Jeremiah,JSS2C,Day
+Ibikunle Ibrahim,JSS2C,Day
+Isiaka Hamdalat,JSS2C,Day
+Jooda Abdullateef,JSS2C,Boarder
+Mohammed Habeebat,JSS2C,Day
+Mustapha Fatimah,JSS2C,Boarder
+Ogunsaye Abdullai,JSS2C,Day
+Ojo Muhamidat,JSS2C,Day
+Olukayode Kiibati,JSS2C,Boarder
+Oluwalana Ifeoluwa,JSS2C,Boarder
+Omologo Damilola,JSS2C,Day
+Salaudeen Khadijah,JSS2C,Day
+Salawu Praise,JSS2C,Day
+Salisu Precious,JSS2C,Day
+Seriki Abdulsalam,JSS2C,Day
+Shorinmade Daniel,JSS2C,Boarder
+Yussuf Khalid,JSS2C,Day
+Abiola Khalil,JSS2C,Boarder
+Oni Nathaniel,JSS2C,Day
+Yekinni Ahmad,JSS2C,Day
+Adedeji Emmanuel,JSS2D,Day
+Adegboye Joshua,JSS2D,Day
+Adekanbi Muhammad,JSS2D,Day
+Adekunle Inioluwa,JSS2D,Boarder
+Adeogun Juwon,JSS2D,Day
+Adesokan Josiah,JSS2D,Day
+Ajayi Afolabi,JSS2D,Day
+Akanni Aishat,JSS2D,Day
+Akinjobi Abdul-Raheem,JSS2D,Day
+Aremu Abdul-Lateef,JSS2D,Day
+Awojide Oluwasoromi,JSS2D,Day
+Bankole Ivana,JSS2D,Boarder
+Ibrahim Alveenah,JSS2D,Day
+Idris Rodiat,JSS2D,Boarder
+Iwere Angelica,JSS2D,Day
+Kudeti Baseet,JSS2D,Day
+Kuranga Princess,JSS2D,Day
+Nurudeen Wasilat,JSS2D,Day
+Ogunjobi Morire,JSS2D,Day
+Oquntade Kehinde,JSS2D,Day
+Ojelade Akinkunmi,JSS2D,Day
+Ojo Emmanuel,JSS2D,Day
+Oladele Ruth,JSS2D,Boarder
+Omoyunabo Ayomide,JSS2D,Day
+Sajimi Joshua,JSS2D,Day
+Salauden Fridaous,JSS2D,Day
+Temidays Mercy,JSS2D,Day
+Ezeithe Destiny,JSS2D,Boarder
+Yusuf Florence,JSS2D,Boarder
+Abimbola Oluwadarasimi,JSS3A,Day
+Abiodun Mishael,JSS3A,Day
+Abu Al-Islam,JSS3A,Day
+Adeniji Fatimah,JSS3A,Day
+Adeyemo Faruq,JSS3A,Day
+Aina Morzuqah,JSS3A,Day
+Ajibade Aishat,JSS3A,Day
+Ajijola Faaiz,JSS3A,Day
+Akindele Feyikemi,JSS3A,Day
+Akinjobi fareedah,JSS3A,Day
+Akintunde Hibatullah,JSS3A,Day
+Akinyokun adebola,JSS3A,Day
+Ayanda Deborah,JSS3A,Day
+Azeez Abdulbasit,JSS3A,Day
+Baiyewu Oyinkansola,JSS3A,Day
+Egunfemi Dorcas,JSS3A,Day
+Esin Ahamd,JSS3A,Day
+Fagbuyiro Zion,JSS3A,Day
+Fatai Abdulsamal,JSS3A,Day
+Jinadu Precious,JSS3A,Day
+Lafeef Smith,JSS3A,Day
+Lawal Kazeem,JSS3A,Day
+Lawal keefayah,JSS3A,Day
+Misbaudeen Summayyah,JSS3A,Day
+Ogunfunwa Eniola,JSS3A,Day
+Ojelade gbemisola,JSS3A,Boarder
+Oladapo Abdulkhatiq,JSS3A,Boarder
+Olaniyi David,JSS3A,Day
+Oluwatayo Matilda,JSS3A,Day
+Omogo Chidinma,JSS3A,Day
+Onwubiko Frances,JSS3A,Day
+Oyinlola Rahmatallah,JSS3A,Day
+Sulaimon abdulrahmon,JSS3A,Day
+Yedenu Deborah,JSS3A,Day
+Yusuf Fawaz,JSS3A,Day
+Abdulsalam Samiat,JSS3B,Day
+Abiola Boluwatife,JSS3B,Day
+Adebanjo Fawaz,JSS3B,Day
+Adekunle Hepzibah,JSS3B,Boarder
+Ademola Gold,JSS3B,Boarder
+Adeogun AbdulAzeez,JSS3B,Day
+Adewunmi mark,JSS3B,Boarder
+Adeyemo Azeedat,JSS3B,Day
+Adeyemo jadesola,JSS3B,Day
+Alabi Nachelle,JSS3B,Day
+Amusa Abdulsamad,JSS3B,Day
+Awogu Chikwunonso,JSS3B,Boarder
+Ayanlowo ayantola,JSS3B,Boarder
+Busari Moyinoluwa,JSS3B,Day
+Eguevon Chineye,JSS3B,Day
+Ezechi chiamanda,JSS3B,Day
+Fadera muthmaheen,JSS3B,Boarder
+Gbadegesin Abdulsalam,JSS3B,Boarder
+Hassan Seyifunmi,JSS3B,Day
+Kelani Ibrahim,JSS3B,Day
+Moshood Fereedah,JSS3B,Day
+Ogunjobi Al-meen,JSS3B,Day
+Ojerinde Aqeelah,JSS3B,Day
+Olayemi Abdul-mujeeb,JSS3B,Boarder
+Oloyede Praise,JSS3B,Boarder
+Olusokan Zinat,JSS3B,Day
+Oseni Kwathar,JSS3B,Boarder
+Owonikoko Nimatallah,JSS3B,Day
+Oyalowo Ramahtu,JSS3B,Day
+Raheem Abdulsamad,JSS3B,Day
+Tewogbola Mariam,JSS3B,Boarder
+Adebisi Folarera,JSS3C,Day
+Adeniji Fathia,JSS3C,Day
+Adeniran Donald,JSS3C,Day
+Adeoye Oluwagbemisola,JSS3C,Day
+Aina Olashile,JSS3C,Boarder
+Anyiador Rachael,JSS3C,Day
+AribisalaAyomikun,JSS3C,Day
+Awhagon Esther,JSS3C,Day
+Ayoade Zainab,JSS3C,Day
+Babayanju Yusuf,JSS3C,Day
+Bankole Adewonuola,JSS3C,Day
+Beke Omotoyosi,JSS3C,Day
+Famodimu Immanuel,JSS3C,Day
+Fayoda Ezekiel,JSS3C,Boarder
+Kelani fareedah,JSS3C,Day
+Kolawole Oyinkansola,JSS3C,Day
+Lameed Zainab,JSS3C,Day
+Lamina Olaoluwa,JSS3C,Day
+Lasisi Aisha,JSS3C,Boarder
+Lawal Halimah,JSS3C,Day
+Muhammed Aminah,JSS3C,Day
+Obianwu Nkiruka,JSS3C,Day
+Ogundiro Mubarak,JSS3C,Day
+Okedeyi Grace,JSS3C,Day
+Olajuwon Ganiu,JSS3C,Day
+Oyebade Fikayomi,JSS3C,Boarder
+Peters Nkechiamaka,JSS3C,Boarder
+Peters Uzochi,JSS3C,Boarder
+Sanni Adams,JSS3C,Day
+Taiwo Fareed,JSS3C,Day
+Tanimola jemilat,JSS3C,Day
+Ubiji- Prince Michael,JSS3C,Day
+Adedeji Emmanuel,JSS3D,Day
+Adeniji Fathia,JSS3D,Day
+Adeniyi Akbar,JSS3D,Day
+Adewunmi Mark,JSS3D,Boarder
+Ajanaku Akorede,JSS3D,Day
+Ajao Hameema,JSS3D,Day
+Akniboyede Bolutife,JSS3D,Day
+Aribisala Ayomide,JSS3D,Day
+Awe Morenikeji,JSS3D,Day
+Bello Mariam,JSS3D,Day
+Fadare Muthmaeen,JSS3D,Boarder
+Kelani Fareedah,JSS3D,Day
+Kolawole Oyinkansola,JSS3D,Day
+Lasisi Aishat,JSS3D,Boarder
+Lawal Haleemah,JSS3D,Day
+Mohadded Animat,JSS3D,Day
+Obianwu Nkiruka,JSS3D,Day
+Okedenyi Grace,JSS3D,Day
+Oladeinde Fareedah,JSS3D,Day
+Olajuwon Genius,JSS3D,Day
+Peters Nkechiamaka,JSS3D,Boarder
+Peters Uzchi,JSS3D,Boarder
+Sowunmi Emmanel,JSS3D,Day
+Adeoye Olumide,SS1A1,Day
+Adeshina Basit,SS1A1,Day
+Adewuyi Praise,SS1A1,Boarder
+Ajibola Temitope,SS1A1,Day
+Akanni Fatiah,SS1A1,Boarder
+Ariabede Ifeoluwa,SS1A1,Day
+Awhangonu Emmanuel,SS1A1,Day
+Babalola Samuel,SS1A1,Day
+Badejo Grace,SS1A1,Day
+Bello Tobiloba,SS1A1,Day
+Bodunrinde Damilare,SS1A1,Day
+Dada Fikumi,SS1A1,Day
+Ekundayo Mubarak,SS1A1,Day
+Famuyiwa Serah,SS1A1,Boarder
+Kosolu Deborah,SS1A1,Day
+Odedina Hamdan,SS1A1,Day
+Odubonajo Deborah,SS1A1,Day
+Ogunsua Michelle,SS1A1,Boarder
+Okwudiri Blessing,SS1A1,Boarder
+Olabode Tomisin,SS1A1,Boarder
+Oladele El-olam,SS1A1,Day
+Oladunjoye Victoria,SS1A1,Boarder
+Olaniyan Abdulmalik,SS1A1,Day
+Olarewaju Jamal,SS1A1,Day
+Olaogan Fisayo,SS1A1,Day
+Opebi Priscilla,SS1A1,Day
+Oseni A. Hancefa,SS1A1,Day
+Owolabi Fuad,SS1A1,Day
+Salami Marzoug,SS1A1,Day
+Sosanya Anjola,SS1A1,Day
+Abdulmalik Jimoh,SS1A2,Boarder
+Abubakri Aminat,SS1A2,Day
+Adebiyi Oluwadara,SS1A2,Boarder
+Adelakun Misturah,SS1A2,Day
+Ahmad Aminat,SS1A2,Day
+Aiyeola Omofolarin,SS1A2,Boarder
+Akindele Oluwanifemi,SS1A2,Day
+Alabi Iretomina,SS1A2,Day
+Ali Ayomide,SS1A2,Day
+Aregbesola Oluwasemilore,SS1A2,Boarder
+Aremu Al-amen,SS1A2,Day
+azeez Abdul- mujeeb,SS1A2,Boarder
+Ayorinde Ahmad,SS1A2,Day
+Bakare Abdulhamad,SS1A2,Boarder
+Bolaji AL-ameen,SS1A2,Day
+Chikaodi Winner,SS1A2,Day
+Fayoda Oluwatomisin,SS1A2,Boarder
+Hassan Abdul-Hafeez,SS1A2,Boarder
+Hassan Abdul- Malik,SS1A2,Boarder
+Idris Mukhtar,SS1A2,Boarder
+Lamina Oyinkansola,SS1A2,Day
+Lateef Abdullahi,SS1A2,Day
+Ishaq Kelly Eniola,SS1A2,Boarder
+Mustapha Jamaldeen,SS1A2,Boarder
+Ibrahim Muslimah,SS1A2,Day
+Onuigbo Victor,SS1A2,Day
+Olakitan Mustapha,SS1A2,Boarder
+0wonikoko Balikis,SS1A2,Day
+Samuel Oreoluwa,SS1A2,Day
+Salaudeen Jubril,SS1A2,Boarder
+Saka Abdullah,SS1A2,Day
+Matanmi Amirah,SS1A2,Day
+Jimoh Mordiyah,SS1A2,Day
+Lawal Abdul-ramoh,SS1A2,Day
+Akınsola Taslemah,SS1A2,Day
+Yusuf Zaynab,SS1A2,Day
+Uthman Zainab,SS1A2,Day
+Williams Opeyemi,SS1A2,Day
+Abanikanda tarhan,SS1A3,Day
+Abdulazeez Mariam,SS1A3,Day
+Adeladan Hairat,SS1A3,Day
+Adeyemo Mofiyinfunjesu,SS1A3,Day
+Akinlade Akintolu,SS1A3,Boarder
+Akintola Hussein,SS1A3,Day
+Akinyefa Dominion,SS1A3,Day
+Alli Muhammed,SS1A3,Day
+Aloba Khadijah,SS1A3,Day
+babalola Aarinola,SS1A3,Day
+Babalola Ipadeola,SS1A3,Day
+Bamidele David,SS1A3,Day
+Idowy Atifat,SS1A3,Day
+Jamiu Azeemah,SS1A3,Day
+Kakanfo - Michael Eniolay,SS1A3,Day
+Kudeti Abdul - Aleem,SS1A3,Day
+Moronkola Muh Awwal,SS1A3,Day
+Mustapha Tosin,SS1A3,Day
+Ogunnoiki Inioluwa,SS1A3,Day
+Olalekan Habeebat,SS1A3,Day
+Olanrewaju Rodiat,SS1A3,Day
+Olatunji David,SS1A3,Day
+Olosunde Ahliyah,SS1A3,Day
+Oyagade Uyimide,SS1A3,Day
+Shobulo Omolayo,SS1A3,Day
+Adesanya Adebola,SS1A4,Day
+Adewole Abdulraheem,SS1A4,Day
+Bakare Mustapha,SS1A4,Day
+Emeka Obinna,SS1A4,Day
+Idris Bolatito,SS1A4,Day
+Iwere Micheal,SS1A4,Day
+Ladeji Abdulmalik,SS1A4,Boarder
+Mustafahu R Modinat,SS1A4,Day
+Odedele Ibukun,SS1A4,Day
+Oladejo Omotolani,SS1A4,Day
+Owolabi iyanuoluwa,SS1A4,Boarder
+Salaudeen Halimah,SS1A4,Day
+Sherif Mustabshiroh,SS1A4,Day
+Yusuf Mary,SS1A4,Boarder
+Adeoye Cherish O,SS1A4,Day
+Ohajuru Emmanuel,SS1A4,Day
+Olajuwon Ridwan,SS1A4,Day
+Olodan Abdulgafar,SS1A4,Boarder
+Adegbenjo Fikunayomi,SS1B/C,Day
+Ajibade Mahfus,SS1B/C,Day
+Ajiboye Marvellous,SS1B/C,Boarder
+Aribisala Esther,SS1B/C,Day
+Babalola Atilola,SS1B/C,Day
+Dada Fareedahr,SS1B/C,Day
+Dada Rodiah,SS1B/C,Day
+Dehinde Abeebah,SS1B/C,Day
+Durozwoju Haliyah,SS1B/C,Day
+Fagbohun Mayomiposi,SS1B/C,Boarder
+Idiogbe Pelumi,SS1B/C,Boarder
+Kasali Tolawole,SS1B/C,Day
+Odufejo Eunice,SS1B/C,Day
+Oladimeji loyeebah,SS1B/C,Day
+Olaogun Muhammed,SS1B/C,Day
+Olatundun Esther,SS1B/C,Day
+Oyalawo Hameedah,SS1B/C,Day
+Salawudeen Abdurrahman,SS1B/C,Boarder
+Taiwo Naomi,SS1B/C,Day
+Ugwueze Samuel,SS1B/C,Day
+Uluocha Precious,SS1B/C,Day
+Abiodun Fareed,SS2A1,Boarder
+Adekoya Hafeezah,SS2A1,Day
+Adeniyi Oluwamuyiwa Ann,SS2A1,Day
+Airjola Fawway,SS2A1,Day
+Ajayi David,SS2A1,Day
+Akinde Amenah,SS2A1,Day
+Akinyoade Olyatofunmi,SS2A1,Day
+Alabi Oreofe,SS2A1,Boarder
+Badmus Faozan,SS2A1,Day
+Banjoko Eniola,SS2A1,Day
+Barewy Oluwalage,SS2A1,Day
+Bolaji Amotus-Salam,SS2A1,Day
+Efundowo Living-Source,SS2A1,Day
+Esin Nafeesah,SS2A1,Day
+Fakorede Mercy,SS2A1,Day
+Femi Joseph,SS2A1,Day
+Jimoh Abdullah,SS2A1,Day
+King Khalidah,SS2A1,Day
+Kudeti Miftaudeen,SS2A1,Day
+Lawal Fatia,SS2A1,Day
+Obadimu Teslim,SS2A1,Boarder
+Obianwu Chinelo,SS2A1,Day
+Ogunminde Mateenah,SS2A1,Day
+Okoli Miracle,SS2A1,Day
+Onike- Azeez Abdul-Azeez,SS2A1,Day
+Oseni Taiwo,SS2A1,Day
+Salau Aisha,SS2A1,Day
+Salaudeen Nafeesah,SS2A1,Day
+Sanni Fuad,SS2A1,Day
+Shasanmi Marvellous Olaseni,SS2A1,Day
+Abdulaziz Zainb,SS2A2,Day
+Abdulsalam Abdulbasit,SS2A2,Day
+Adabanjo haleemah,SS2A2,Day
+Adamson Abdulhamid,SS2A2,Boarder
+Adealu David,SS2A2,Boarder
+Adeleke Haliyah,SS2A2,Boarder
+Adeniji Maryam,SS2A2,Day
+Akintola Azeezat,SS2A2,Boarder
+Alabi Muaz,SS2A2,Day
+Algero Sofeeyah,SS2A2,Day
+Aragundade zainab,SS2A2,Boarder
+Aremu Hahimat,SS2A2,Day
+Areo Muhyideen,SS2A2,Day
+Ayanlowo Adeolu,SS2A2,Boarder
+Bammeke Grace,SS2A2,Day
+Bankole shefiqot,SS2A2,Day
+Folarin Abdulsalam,SS2A2,Boarder
+Hamza Manyam,SS2A2,Day
+Hassan Mahmud,SS2A2,Day
+Ibrahim Abdulsamad.,SS2A2,Boarder
+Ifebanjo Anjolaoluwa,SS2A2,Day
+Lawrence Henry,SS2A2,Boarder
+Mohammed Jamiu,SS2A2,Day
+Mustapha Abdulsalam,SS2A2,Day
+Ogabi Ameedah,SS2A2,Boarder
+Ogunbiyi Abdulquadri,SS2A2,Day
+Ojedade Praise,SS2A2,Day
+Olayiwola Demilade,SS2A2,Day
+Oshodi Kunle,SS2A2,Boarder
+Owodunni Imran,SS2A2,Day
+Rufai Raisudsen,SS2A2,Day
+Salawu Abdulganiy,SS2A2,Boarder
+Samuel Skinnayeni,SS2A2,Day
+Sulaimon Hammedat,SS2A2,Day
+Abiola fawaz,SS2A3,Boarder
+Abiola Aomeelah,SS2A3,Day
+Adebajo Abdul Malik,SS2A3,Day
+Adewole Nifemi,SS2A3,Day
+Ajibike Abdul Azeez,SS2A3,Boarder
+Ajulo Demilade,SS2A3,Day
+Akinwunmi Zeenat,SS2A3,Boarder
+Asimi Mustapha,SS2A3,Boarder
+Atoyebi Abdulrahman,SS2A3,Day
+Atoyebi Muhammed,SS2A3,Boarder
+Badmus Fuad,SS2A3,Day
+Fayoda Tamilore,SS2A3,Boarder
+Haruna Muheet,SS2A3,Day
+Ibrahim AbdulRaheem,SS2A3,Day
+Idowu Atiat,SS2A3,Day
+Kareem Abdullah,SS2A3,Day
+Khamoni Rodigh,SS2A3,Day
+Odeyemi Muthaaheenah,SS2A3,Boarder
+Ojo Muqthar,SS2A3,Day
+Olamola Darasimi,SS2A3,Day
+Olarewaju Emanuella,SS2A3,Day
+Osanyibi Soferyah,SS2A3,Day
+Oyalowo Uthman,SS2A3,Day
+Oyi Jonathan,SS2A3,Day
+Sulaimon Khadeejah,SS2A3,Day
+Yakub Habeeb,SS2A3,Day
+Adekunle Khalid,SS2A4,Day
+Adeola Aralepo Fayzavol,SS2A4,Boarder
+Akinjobi Fatimah,SS2A4,Day
+Akintola Abdul rahmani,SS2A4,Boarder
+Alabi Anjola,SS2A4,Day
+Alabi Sultan,SS2A4,Boarder
+Aladeyelu Nifemi,SS2A4,Day
+Amusa Saad,SS2A4,Day
+Bakare Monsunat,SS2A4,Day
+Bankole Balkis,SS2A4,Day
+Edono Dona,SS2A4,Day
+Equeron Clara,SS2A4,Day
+Hajiowo Teslimah,SS2A4,Day
+Jimoh Yusuf,SS2A4,Day
+Jones Abayomi,SS2A4,Boarder
+Kalukuda Kamilah,SS2A4,Day
+Kehinde Hassan,SS2A4,Day
+Kolade Khaled,SS2A4,Day
+Komdate Dominion,SS2A4,Day
+Kunanga Promise,SS2A4,Day
+Odedina Wydad,SS2A4,Day
+Odusanya Jemeel,SS2A4,Boarder
+Okedeyi Micheal,SS2A4,Day
+Onuigbo Incoluwa-Amanda,SS2A4,Day
+Oseni Kehinde,SS2A4,Day
+Oyebade Ireduvia,SS2A4,Boarder
+Sanusi Wifiah,SS2A4,Day
+Sulemon Aliyah,SS2A4,Day
+Tejidini Bushnoh,SS2A4,Day
+Uqueze Micheal,SS2A4,Day
+Yusuf Atameen,SS2A4,Day
+Aasa Priscilla,SS2B/C,Day
+Adeyemo firdous,SS2B/C,Day
+Aina Al - Mubarak,SS2B/C,Day
+Ajibade Mahfus,SS2B/C,Day
+Alagbo Faridah,SS2B/C,Boarder
+Asani Abdulrazaq,SS2B/C,Day
+Babasanya Islamiya,SS2B/C,Day
+Daudu Basit,SS2B/C,Boarder
+Enike Chidiebere,SS2B/C,Day
+Kolade Comfort,SS2B/C,Boarder
+Mustapha Lotefoh,SS2B/C,Boarder
+Oloyede Darasimi,SS2B/C,Boarder
+Opebi Meshach,SS2B/C,Day
+Opere Olivia,SS2B/C,Day
+Raji Faheemat,SS2B/C,Day
+Sherif Sobiha,SS2B/C,Day
+Abdul salam Aneesah,SS3A1,Boarder
+Abdulazeez Abdulraheem,SS3A1,Day
+Abdullateef Faridah,SS3A1,Day
+Adeniran Mayowa,SS3A1,Boarder
+Adewole Firdans,SS3A1,Boarder
+Adeyeye Peace,SS3A1,Boarder
+Ajibade Mujeedat,SS3A1,Day
+Ajibike Fatimah,SS3A1,Boarder
+Akinleye Success,SS3A1,Boarder
+Akinpelu Feyisolaolen,SS3A1,Boarder
+Atojebi Aisha,SS3A1,Boarder
+Babalola Mumtaz,SS3A1,Boarder
+Balogun Abdulrahman,SS3A1,Boarder
+Bello Oluwatomilole,SS3A1,Day
+Biriowo Raodat,SS3A1,Day
+Fasosin Aderolakem,SS3A1,Day
+Fasugba Rayhan,SS3A1,Boarder
+Hassan Rabin,SS3A1,Boarder
+Lawal AbdulFatai,SS3A1,Day
+Muse Abdulmalik,SS3A1,Boarder
+Mustapha-Olumowe Iman,SS3A1,Boarder
+Odedele Oluwadarasimi,SS3A1,Day
+Ogunfowora Aishat,SS3A1,Boarder
+Oguntowora Ahmad,SS3A1,Boarder
+Olaiya Oluwademilade,SS3A1,Day
+Olaogun Muiz,SS3A1,Day
+Osom Daniel,SS3A1,Day
+Shobogun Fadihullah,SS3A1,Day
+Temidayo Ayomide,SS3A1,Day
+Abdulwaliy Amanatullah,SS3A2,Day
+Adebari- Eniola,SS3A2,Boarder
+Adekoya Fareedah,SS3A2,Day
+Adewole Peace,SS3A2,Boarder
+Adeyinka Rodhya,SS3A2,Day
+Afolabi Fatimah,SS3A2,Day
+Agoro Hussein,SS3A2,Day
+Akinsola Mukthar,SS3A2,Day
+Alabi Iremide,SS3A2,Boarder
+Alegbeleye Jeremiah,SS3A2,Day
+Ayegboka Ayomide,SS3A2,Day
+Balogun Firdaous,SS3A2,Day
+Beke Ayomide,SS3A2,Day
+Eniola Anat,SS3A2,Day
+Fasina Sobur,SS3A2,Boarder
+Hamzat Fathia,SS3A2,Day
+Ileogben Stephanie,SS3A2,Day
+Junaid Muhammad,SS3A2,Boarder
+Kassim Fawaz,SS3A2,Boarder
+Kolade Victoria,SS3A2,Boarder
+Moshood Abdulquadri,SS3A2,Day
+Mustapha Abdullabeef,SS3A2,Boarder
+Odeniyi Kolawole,SS3A2,Boarder
+Ogunionbi Evergreat,SS3A2,Boarder
+Ogunjobi Masturah,SS3A2,Boarder
+Oluwafemi Victoria,SS3A2,Boarder
+Onwubiko Clara,SS3A2,Day
+Opebiyi Success,SS3A2,Day
+Salako Solihat,SS3A2,Day
+Sangobiyi Tolani,SS3A2,Day
+Seriki Ganiyat,SS3A2,Day
+Soliu Wasilat,SS3A2,Boarder
+Williams Olamilekan,SS3A2,Boarder
+Abanikanda Fareed,SS3B/C,Boarder
+Adedokun Fisayo,SS3B/C,Day
+Aina Sulaiman,SS3B/C,Boarder
+Akindele Itunu,SS3B/C,Boarder
+Animashaun Ameerat,SS3B/C,Day
+Akinyokun Bolatito,SS3B/C,Boarder
+Ayanboade Widaad,SS3B/C,Boarder
+Balogun Yeseerah,SS3B/C,Day
+Egunfemi Deborah,SS3B/C,Day
+Fawole Aisha,SS3B/C,Boarder
+Hassan Abiola,SS3B/C,Day
+Lateef Ikimot,SS3B/C,Day
+Moronkola Ayomiposi,SS3B/C,Day
+Mushafau Mustapha,SS3B/C,Day
+Odunsi Emmanuel,SS3B/C,Day
+Oladapo Coker,SS3B/C,Day
+Orija Busolami,SS3B/C,Day
+Oyebowale David,SS3B/C,Day
+Rabiu Olumanifemi,SS3B/C,Day
+Shoji Feyitayomi,SS3B/C,Day
+Shorunke Summayah,SS3B/C,Boarder

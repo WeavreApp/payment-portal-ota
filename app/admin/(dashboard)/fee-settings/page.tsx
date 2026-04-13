@@ -156,7 +156,9 @@ export default function FeeSettingsPage() {
         .from('fee_settings')
         .upsert({ 
           setting_key: 'global_hostel_fee', 
-          setting_value: globalHostelFee 
+          setting_value: String(globalHostelFee) 
+        }, {
+          onConflict: 'setting_key'
         });
 
       if (error) throw error;
@@ -177,7 +179,9 @@ export default function FeeSettingsPage() {
         .from('fee_settings')
         .upsert({ 
           setting_key: 'ss3_hostel_fee', 
-          setting_value: ss3HostelFee 
+          setting_value: String(ss3HostelFee) 
+        }, {
+          onConflict: 'setting_key'
         });
 
       if (error) throw error;

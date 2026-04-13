@@ -11,7 +11,8 @@
     "add-students": "node scripts/add-students.js",
     "setup-database": "node scripts/setup-database.js",
     "seed-database": "node scripts/seed-database.js",
-    "setup": "node scripts/setup.js"
+    "setup": "node scripts/setup.js",
+    "postinstall": "npm run setup"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

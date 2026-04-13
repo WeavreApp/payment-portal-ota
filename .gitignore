@@ -30,8 +30,3 @@ yarn-error.log*
 # typescript (keep for IntelliSense)
 # *.tsbuildinfo
 # next-env.d.ts
-
-# environment variables (security)
-.env
-.env.local
-.env*.local

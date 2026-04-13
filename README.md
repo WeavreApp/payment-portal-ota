@@ -2,6 +2,8 @@
 
 A comprehensive school payment management system built with Next.js, TypeScript, Supabase, and Tailwind CSS.
 
+**⚠️ Private Project** - This is a private project for internal use only. All team members use the shared Supabase configuration.
+
 ## Features
 
 - **Student Management**: Add, edit, and manage student records
@@ -13,143 +15,21 @@ A comprehensive school payment management system built with Next.js, TypeScript,
 - **SS3 Special Handling**: Dedicated hostel fee and NECO exam fee for final-year students
 - **Term Reset**: Reset payment statuses for new terms (excludes SS3 students)
 
-## Quick Start (3 Steps)
-
-### 1. Clone and Install
+## Quick Start (1 Command)
 
 ```bash
 git clone https://github.com/WeavreApp/payment-portal-ota.git
 cd payment-portal-ota
 npm install
-```
-
-### 2. Run Setup Wizard
-
-```bash
-npm run setup
-```
-
-The interactive setup wizard will:
-- Guide you through Supabase configuration
-- Create `.env.local` file automatically
-- Run database migrations
-- Seed sample data (optional)
-- Help you create an admin user
-
-### 3. Start Development
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## That's It!
-
-The setup wizard handles everything. Just follow the prompts and you'll be running in minutes.
-
----
-
-## Manual Setup (Optional)
-
-If you prefer manual setup or need more control, follow these steps:
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-- Supabase account (free tier works)
-
-### 1. Set up Supabase
-
-1. Go to [supabase.com](https://supabase.com) and create a new project
-2. Wait for the project to be ready (2-3 minutes)
-3. Go to **Settings → API** and copy:
-   - Project URL
-   - Anon public key
-   - Service role key (for migrations)
-
-### 2. Configure environment variables
-
-Create a `.env.local` file in the root directory:
-
-```bash
-cp .env.local.example .env.local
-```
-
-Edit `.env.local` and replace with your Supabase credentials:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key-here
-SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_ANON_KEY=your-supabase-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key-here
-```
-
-### 3. Run database migrations
-
-The project includes 18 database migrations that set up the complete schema:
-
-```bash
-# Option 1: Using setup script (recommended)
-npm run setup-database
-
-# Option 2: Using Supabase CLI
-npx supabase db push
-
-# Option 3: Manually via Supabase Dashboard
-# Go to SQL Editor and run each migration file from supabase/migrations/
-```
-
-**Migration files** (in order):
-1. `20260403024253_create_school_payment_schema.sql` - Core schema
-2. `20260403024304_create_storage_bucket.sql` - Storage setup
-3. `20260403091613_add_superadmin_role_and_rbac.sql` - Admin roles
-4. `20260403101906_add_student_type_and_misc_payments.sql` - Student types
-5. `20260403110551_fix_lookup_student_and_trigger.sql` - Triggers
-6. `20260404153200_password_reset_requests.sql` - Password reset
-7. `20260404160000_class_structure.sql` - Class structure
-8. `20260405163000_add_misc_items_description.sql` - Misc items
-9. `20260405173000_create_fee_management.sql` - Fee management
-10. `20260405174000_add_mindcraft_config.sql` - Mindcraft config
-11. `20260405220000_update_class_fee_rates.sql` - Class fee rates
-12. `20260405230000_remove_mindcraft_settings.sql` - Cleanup
-13. `20260406000000_add_payment_tracking.sql` - Payment tracking
-14. `20260411000000_add_bank_accounts.sql` - Bank accounts
-15. `20260412000000_add_neco_fee_column.sql` - NECO fee
-16. `20260412000001_add_ss3_hostel_fee_setting.sql` - SS3 hostel fee
-
-### 4. Seed database with sample data (optional)
-
-To populate the database with sample fee rates, bank accounts, and settings:
-
-```bash
-npm run seed-database
-```
-
-This will add:
-- Default fee settings (hostel fees, NECO fee)
-- Class fee rates for all classes (JSS, SS, Primary)
-- Sample bank accounts
-
-### 5. Create initial admin user
-
-After migrations, create a super admin user:
-
-```bash
-# Via Supabase SQL Editor
-INSERT INTO profiles (id, email, role, full_name)
-VALUES (gen_random_uuid(), 'admin@school.com', 'superadmin', 'School Admin');
-
--- Then create auth user via Supabase Dashboard → Authentication
-```
-
-### 6. Start the development server
-
-```bash
-npm run dev
-```
+That's it! `npm install` automatically runs setup which:
+- Loads Supabase credentials from `.env.local` (already in repo)
+- Tests database connection
+- Runs all database migrations
+- Seeds fee rates and settings
+- You're ready to go!
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 

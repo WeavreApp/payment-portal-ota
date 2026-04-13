@@ -162,7 +162,57 @@ export default function FeeSettingsPage() {
         });
 
       if (error) throw error;
-      toast.success('Global hostel fee updated');
+
+      // Update all non-SS3 boarding students with new hostel fee
+      const newHostelFee = parseFloat(globalHostelFee);
+      const { data: students, error: fetchError } = await supabase
+        .from('students')
+        .select('id, class, total_fees, neco_fee')
+        .eq('student_type', 'boarding')
+        .not('class', 'like', 'SS3%');
+
+      if (fetchError) throw fetchError;
+
+      if (students && students.length > 0) {
+        // Get class fee rates to calculate base tuition
+        const { data: classRates } = await supabase
+          .from('class_fee_rates')
+          .select('class_name, day_student_fee');
+
+        if (classRates) {
+          let updatedCount = 0;
+          const BATCH_SIZE = 50;
+
+          for (let i = 0; i < students.length; i += BATCH_SIZE) {
+            const batch = students.slice(i, i + BATCH_SIZE);
+
+            const updatePromises = batch.map(student => {
+              const classRate = classRates.find(r => r.class_name === student.class);
+              const baseTuition = classRate ? classRate.day_student_fee : 0;
+              const necoFee = student.neco_fee || 0;
+              const newTotalFee = baseTuition + newHostelFee + necoFee;
+
+              return supabase
+                .from('students')
+                .update({
+                  total_fees: newTotalFee,
+                  hostel_fee: newHostelFee
+                })
+                .eq('id', student.id);
+            });
+
+            const results = await Promise.all(updatePromises);
+            results.forEach(result => {
+              if (!result.error) updatedCount++;
+            });
+          }
+
+          toast.success(`Global hostel fee updated (${updatedCount} students updated)`);
+        }
+      } else {
+        toast.success('Global hostel fee updated');
+      }
+
       await loadFeeSettings();
     } catch (error: any) {
       toast.error('Failed to update global hostel fee');
@@ -185,7 +235,57 @@ export default function FeeSettingsPage() {
         });
 
       if (error) throw error;
-      toast.success('SS3 hostel fee updated');
+
+      // Update all SS3 boarding students with new hostel fee
+      const newHostelFee = parseFloat(ss3HostelFee);
+      const { data: students, error: fetchError } = await supabase
+        .from('students')
+        .select('id, class, total_fees, neco_fee')
+        .eq('student_type', 'boarding')
+        .like('class', 'SS3%');
+
+      if (fetchError) throw fetchError;
+
+      if (students && students.length > 0) {
+        // Get class fee rates to calculate base tuition
+        const { data: classRates } = await supabase
+          .from('class_fee_rates')
+          .select('class_name, day_student_fee');
+
+        if (classRates) {
+          let updatedCount = 0;
+          const BATCH_SIZE = 50;
+
+          for (let i = 0; i < students.length; i += BATCH_SIZE) {
+            const batch = students.slice(i, i + BATCH_SIZE);
+
+            const updatePromises = batch.map(student => {
+              const classRate = classRates.find(r => r.class_name === student.class);
+              const baseTuition = classRate ? classRate.day_student_fee : 0;
+              const necoFee = student.neco_fee || 0;
+              const newTotalFee = baseTuition + newHostelFee + necoFee;
+
+              return supabase
+                .from('students')
+                .update({
+                  total_fees: newTotalFee,
+                  hostel_fee: newHostelFee
+                })
+                .eq('id', student.id);
+            });
+
+            const results = await Promise.all(updatePromises);
+            results.forEach(result => {
+              if (!result.error) updatedCount++;
+            });
+          }
+
+          toast.success(`SS3 hostel fee updated (${updatedCount} students updated)`);
+        }
+      } else {
+        toast.success('SS3 hostel fee updated');
+      }
+
       await loadFeeSettings();
     } catch (error: any) {
       toast.error('Failed to update SS3 hostel fee');
